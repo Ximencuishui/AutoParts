@@ -50,6 +50,7 @@
                     <li class="px-4 py-2"><a href="admin-orders.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-shopping-cart text-xl"></i><span class="sidebar-text" data-i18n="nav.orders">Orders</span></a></li>
                     <li class="px-4 py-2"><a href="admin-customers.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-users text-xl"></i><span class="sidebar-text" data-i18n="nav.customers">Customers</span></a></li>
                     <li class="px-4 py-2"><a href="admin-reports.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-chart-line text-xl"></i><span class="sidebar-text" data-i18n="nav.reports">Reports</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-marketing.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-bullhorn text-xl"></i><span class="sidebar-text" data-i18n="nav.marketing">Marketing</span></a></li>
                     <li class="px-4 py-2"><a href="admin-settings.html" class="flex items-center space-x-3 text-primary-300 hover:text-white p-2 rounded-md bg-gray-700"><i class="fas fa-cog text-xl"></i><span class="sidebar-text" data-i18n="nav.settings">Settings</span></a></li>
                 </ul>
             </nav>
@@ -139,21 +140,140 @@
                         </label>
                         <button type="button" class="mt-4 w-full sm:w-auto px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-md" data-i18n="settings.save">Save settings</button>
                     </div>
+
+                    <div class="lg:col-span-2 border-t border-gray-200 pt-6 mt-2">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                            <i class="fas fa-plug text-primary-600"></i>
+                            <span data-i18n="settings.api_section_title">API integration</span>
+                        </h2>
+                        <p class="text-sm text-gray-500 mb-4" data-i18n="settings.api_section_desc">Connect logistics, payments, and LLM services.</p>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                            <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                                <h3 class="text-base font-semibold text-gray-900 mb-1"><i class="fas fa-shipping-fast text-primary-600 mr-2"></i><span data-i18n="settings.api_log_title">Logistics tracking API</span></h3>
+                                <p class="text-sm text-gray-500 mb-4" data-i18n="settings.api_log_desc">Endpoint for shipment lookup.</p>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_log_endpoint">API endpoint URL</label>
+                                <input type="url" id="api-log-endpoint" autocomplete="off" placeholder="https://api.example.com/v1/track" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_log_key">API key / token</label>
+                                <input type="password" id="api-log-key" autocomplete="new-password" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm" placeholder="••••••••">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_log_provider">Provider name (optional)</label>
+                                <input type="text" id="api-log-provider" autocomplete="off" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="e.g. Kuaidi100, SF Express">
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                                <h3 class="text-base font-semibold text-gray-900 mb-1"><i class="fas fa-credit-card text-primary-600 mr-2"></i><span data-i18n="settings.api_pay_title">Payment gateway</span></h3>
+                                <p class="text-sm text-gray-500 mb-4" data-i18n="settings.api_pay_desc">Collect payments, refunds, and reconciliation.</p>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_pay_provider">Provider</label>
+                                <input type="text" id="api-pay-provider" autocomplete="off" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm" placeholder="Stripe, PayPal, WeChat Pay…">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_pay_endpoint">Gateway API base URL</label>
+                                <input type="url" id="api-pay-endpoint" autocomplete="off" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm" placeholder="https://api.stripe.com">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_pay_client">Merchant ID / Client ID</label>
+                                <input type="text" id="api-pay-client" autocomplete="off" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_pay_secret">API secret</label>
+                                <input type="password" id="api-pay-secret" autocomplete="new-password" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm" placeholder="••••••••">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_pay_webhook">Webhook signing secret (optional)</label>
+                                <input type="password" id="api-pay-webhook" autocomplete="new-password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="whsec_…">
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                                <h3 class="text-base font-semibold text-gray-900 mb-1"><i class="fas fa-brain text-primary-600 mr-2"></i><span data-i18n="settings.api_llm_title">Large language model (LLM)</span></h3>
+                                <p class="text-sm text-gray-500 mb-4" data-i18n="settings.api_llm_desc">Chat or completion API.</p>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_llm_base">Base URL</label>
+                                <input type="url" id="api-llm-base" autocomplete="off" placeholder="https://api.openai.com/v1" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_llm_key">API key</label>
+                                <input type="password" id="api-llm-key" autocomplete="new-password" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm" placeholder="sk-…">
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="settings.api_llm_model">Default model</label>
+                                <input type="text" id="api-llm-model" autocomplete="off" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="gpt-4o-mini">
+                            </div>
+                        </div>
+                        <div class="mt-4 flex flex-wrap items-center gap-3">
+                            <button type="button" id="api-settings-save" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-md" data-i18n="settings.api_save">Save API settings</button>
+                            <span id="api-settings-msg" class="text-sm text-green-600 hidden" role="status"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <script src="js/admin-api-config.js"></script>
     <script src="js/admin-i18n.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (window.APGAdminI18n) {
                 APGAdminI18n.init();
             }
+
+            function fillApiForm(cfg) {
+                var le = document.getElementById('api-log-endpoint');
+                var lk = document.getElementById('api-log-key');
+                var lp = document.getElementById('api-log-provider');
+                var pp = document.getElementById('api-pay-provider');
+                var pe = document.getElementById('api-pay-endpoint');
+                var pc = document.getElementById('api-pay-client');
+                var ps = document.getElementById('api-pay-secret');
+                var pw = document.getElementById('api-pay-webhook');
+                var lb = document.getElementById('api-llm-base');
+                var lkey = document.getElementById('api-llm-key');
+                var lm = document.getElementById('api-llm-model');
+                if (le) le.value = cfg.logistics.endpoint;
+                if (lk) lk.value = cfg.logistics.apiKey;
+                if (lp) lp.value = cfg.logistics.provider;
+                if (pp) pp.value = cfg.payment.provider;
+                if (pe) pe.value = cfg.payment.endpoint;
+                if (pc) pc.value = cfg.payment.clientId;
+                if (ps) ps.value = cfg.payment.secret;
+                if (pw) pw.value = cfg.payment.webhookSecret;
+                if (lb) lb.value = cfg.llm.baseUrl;
+                if (lkey) lkey.value = cfg.llm.apiKey;
+                if (lm) lm.value = cfg.llm.model;
+            }
+
+            function readApiForm() {
+                return {
+                    logistics: {
+                        endpoint: (document.getElementById('api-log-endpoint') || {}).value || '',
+                        apiKey: (document.getElementById('api-log-key') || {}).value || '',
+                        provider: (document.getElementById('api-log-provider') || {}).value || ''
+                    },
+                    payment: {
+                        provider: (document.getElementById('api-pay-provider') || {}).value || '',
+                        endpoint: (document.getElementById('api-pay-endpoint') || {}).value || '',
+                        clientId: (document.getElementById('api-pay-client') || {}).value || '',
+                        secret: (document.getElementById('api-pay-secret') || {}).value || '',
+                        webhookSecret: (document.getElementById('api-pay-webhook') || {}).value || ''
+                    },
+                    llm: {
+                        baseUrl: (document.getElementById('api-llm-base') || {}).value || '',
+                        apiKey: (document.getElementById('api-llm-key') || {}).value || '',
+                        model: (document.getElementById('api-llm-model') || {}).value || ''
+                    }
+                };
+            }
+
+            if (window.APGAdminApiConfig) {
+                fillApiForm(APGAdminApiConfig.load());
+            }
+
             var st = document.getElementById('sidebar-toggle');
             if (st) {
                 st.addEventListener('click', function () {
                     document.querySelector('.sidebar').classList.toggle('collapsed');
+                });
+            }
+
+            var saveBtn = document.getElementById('api-settings-save');
+            var msgEl = document.getElementById('api-settings-msg');
+            if (saveBtn && window.APGAdminApiConfig) {
+                saveBtn.addEventListener('click', function () {
+                    APGAdminApiConfig.save(readApiForm());
+                    if (msgEl) {
+                        msgEl.textContent = window.APGAdminI18n && APGAdminI18n.t
+                            ? APGAdminI18n.t('settings.api_saved')
+                            : 'Saved.';
+                        msgEl.classList.remove('hidden');
+                        window.clearTimeout(saveBtn._apiMsgT);
+                        saveBtn._apiMsgT = window.setTimeout(function () {
+                            msgEl.classList.add('hidden');
+                        }, 3500);
+                    }
                 });
             }
         });

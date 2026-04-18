@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing | Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: { 500: '#0066ff', 600: '#0052cc', 700: '#003d99' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { transition: width 0.3s ease; }
+        .sidebar.collapsed { width: 5rem; }
+        .sidebar.collapsed .sidebar-text, .sidebar.collapsed .sidebar-logo .logo-text { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100" data-admin-page="marketing">
+    <script src="js/auth.js"></script>
+    <script>
+        (function () {
+            if (!window.APGAuth || !APGAuth.isLoggedIn() || APGAuth.getSession().role !== 'admin') {
+                window.location.replace('admin-login.html');
+            }
+        })();
+    </script>
+    <div class="flex h-screen overflow-hidden">
+        <aside class="sidebar shrink-0 bg-gray-800 text-white w-64 flex flex-col">
+            <div class="sidebar-logo flex items-center justify-between p-4 border-b border-gray-700">
+                <div class="flex items-center space-x-2">
+                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-8 bg-white p-1 rounded">
+                    <span class="logo-text text-xl font-bold">AutoParts Global</span>
+                </div>
+                <button type="button" id="sidebar-toggle" class="p-2 rounded-md hover:bg-gray-700 focus:outline-none" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></button>
+            </div>
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul>
+                    <li class="px-4 py-2"><a href="admin.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-tachometer-alt text-xl"></i><span class="sidebar-text" data-i18n="nav.dashboard">Dashboard</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-products.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-boxes text-xl"></i><span class="sidebar-text" data-i18n="nav.products">Products</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-orders.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-shopping-cart text-xl"></i><span class="sidebar-text" data-i18n="nav.orders">Orders</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-customers.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-users text-xl"></i><span class="sidebar-text" data-i18n="nav.customers">Customers</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-reports.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-chart-line text-xl"></i><span class="sidebar-text" data-i18n="nav.reports">Reports</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-marketing.html" class="flex items-center space-x-3 text-primary-300 hover:text-white p-2 rounded-md bg-gray-700"><i class="fas fa-bullhorn text-xl"></i><span class="sidebar-text" data-i18n="nav.marketing">Marketing</span></a></li>
+                    <li class="px-4 py-2"><a href="admin-settings.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-cog text-xl"></i><span class="sidebar-text" data-i18n="nav.settings">Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="px-4 py-3 border-t border-gray-700">
+                <p class="text-xs text-gray-400 mb-2 sidebar-text" data-i18n="lang.switch">Language</p>
+                <div class="flex rounded-md overflow-hidden border border-gray-600 text-xs">
+                    <button type="button" data-admin-lang="zh" class="flex-1 py-2 font-medium transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">中文</button>
+                    <button type="button" data-admin-lang="en" class="flex-1 py-2 font-medium transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">English</button>
+                </div>
+            </div>
+            <div class="sidebar-footer p-4 border-t border-gray-700">
+                <a href="admin-login.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700"><i class="fas fa-sign-out-alt text-xl"></i><span class="sidebar-text" data-i18n="nav.logout">Logout</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content flex-1 min-w-0 overflow-y-auto bg-gray-100">
+            <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
+                <h1 class="text-2xl font-bold text-gray-800" data-i18n="header.marketing">Marketing</h1>
+                <div class="flex items-center space-x-4">
+                    <button type="button" class="text-gray-600 hover:text-primary-600 relative" aria-label="Notifications"><i class="fas fa-bell text-xl"></i><span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span></button>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" class="h-8 w-8 rounded-full">
+                        <span class="font-semibold" data-i18n="user.admin">Admin User</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-6">
+                <p class="text-sm text-gray-500 mb-4" data-i18n="marketing.intro">Rebate, promotions, and referral rewards (stored in this browser).</p>
+
+                <div class="flex flex-wrap gap-1 mb-6 border-b border-gray-200" role="tablist">
+                    <button type="button" role="tab" aria-selected="true" data-mkt-tab="rebate" id="mkt-tab-rebate" class="mkt-tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-primary-600 text-primary-700 bg-white -mb-px">
+                        <i class="fas fa-percent mr-1.5 opacity-70"></i><span data-i18n="marketing.tab_rebate">Rebate</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-mkt-tab="promo" id="mkt-tab-promo" class="mkt-tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-800 bg-transparent -mb-px">
+                        <i class="fas fa-tags mr-1.5 opacity-70"></i><span data-i18n="marketing.tab_promo">Promotions</span>
+                    </button>
+                    <button type="button" role="tab" aria-selected="false" data-mkt-tab="referral" id="mkt-tab-referral" class="mkt-tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-800 bg-transparent -mb-px">
+                        <i class="fas fa-gift mr-1.5 opacity-70"></i><span data-i18n="marketing.tab_referral">Referral rewards</span>
+                    </button>
+                </div>
+
+                <div id="mkt-panel-rebate" class="mkt-panel">
+                    <div class="bg-white rounded-lg shadow-md border border-gray-100 p-6 max-w-2xl">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-1" data-i18n="marketing.rebate_title">Order rebate</h2>
+                        <p class="text-sm text-gray-500 mb-4" data-i18n="marketing.rebate_desc">Credit a percentage of eligible order amount to customer rebate balance.</p>
+                        <label class="flex items-center gap-2 text-sm text-gray-800 mb-4">
+                            <input type="checkbox" id="mkt-rebate-enabled" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span data-i18n="marketing.rebate_enabled">Enable order rebate</span>
+                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.rebate_percent">Rebate % of order (pre-tax)</label>
+                        <input type="number" id="mkt-rebate-percent" min="0" max="100" step="0.1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.rebate_settlement">Settlement cycle (days)</label>
+                        <input type="number" id="mkt-rebate-settlement" min="1" step="1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.rebate_min_order">Min. order ($) to earn rebate</label>
+                        <input type="number" id="mkt-rebate-min" min="0" step="1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-4 text-sm">
+                        <button type="button" id="mkt-save-rebate" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-md" data-i18n="marketing.save_rebate">Save rebate settings</button>
+                        <p id="mkt-msg-rebate" class="mt-3 text-sm text-green-600 hidden" role="status"></p>
+                    </div>
+                </div>
+
+                <div id="mkt-panel-promo" class="mkt-panel hidden">
+                    <div class="bg-white rounded-lg shadow-md border border-gray-100 p-6">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-1" data-i18n="marketing.promo_title">Promotion rules</h2>
+                        <p class="text-sm text-gray-500 mb-4" data-i18n="marketing.promo_desc">Stacked discounts follow your store policy (prototype: up to 3 active rows).</p>
+                        <label class="flex items-center gap-2 text-sm text-gray-800 mb-4">
+                            <input type="checkbox" id="mkt-promo-enabled" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span data-i18n="marketing.promo_master">Enable promotion engine</span>
+                        </label>
+                        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-gray-50 text-left text-gray-600">
+                                    <tr>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_name">Name</th>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_type">Type</th>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_value">Value</th>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_min">Min cart ($)</th>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_start">Start</th>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_end">End</th>
+                                        <th class="px-3 py-2 font-medium" data-i18n="marketing.promo_col_on">On</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 bg-white">
+                                    <tr class="promo-row" data-promo-idx="0">
+                                        <td class="px-3 py-2"><input type="text" id="promo-0-title" class="w-full min-w-[8rem] border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2">
+                                            <select id="promo-0-type" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                                <option value="percent" data-i18n="marketing.promo_type_pct">% off</option>
+                                                <option value="fixed" data-i18n="marketing.promo_type_fixed">Fixed $ off</option>
+                                                <option value="shipping" data-i18n="marketing.promo_type_ship">Free shipping</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-3 py-2"><input type="number" id="promo-0-value" min="0" step="0.01" class="w-20 border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="number" id="promo-0-minCart" min="0" step="1" class="w-20 border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="date" id="promo-0-start" class="border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="date" id="promo-0-end" class="border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2 text-center"><input type="checkbox" id="promo-0-active" class="rounded border-gray-300 text-primary-600"></td>
+                                    </tr>
+                                    <tr class="promo-row" data-promo-idx="1">
+                                        <td class="px-3 py-2"><input type="text" id="promo-1-title" class="w-full min-w-[8rem] border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2">
+                                            <select id="promo-1-type" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                                <option value="percent" data-i18n="marketing.promo_type_pct">% off</option>
+                                                <option value="fixed" data-i18n="marketing.promo_type_fixed">Fixed $ off</option>
+                                                <option value="shipping" data-i18n="marketing.promo_type_ship">Free shipping</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-3 py-2"><input type="number" id="promo-1-value" min="0" step="0.01" class="w-20 border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="number" id="promo-1-minCart" min="0" step="1" class="w-20 border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="date" id="promo-1-start" class="border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="date" id="promo-1-end" class="border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2 text-center"><input type="checkbox" id="promo-1-active" class="rounded border-gray-300 text-primary-600"></td>
+                                    </tr>
+                                    <tr class="promo-row" data-promo-idx="2">
+                                        <td class="px-3 py-2"><input type="text" id="promo-2-title" class="w-full min-w-[8rem] border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2">
+                                            <select id="promo-2-type" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                                <option value="percent" data-i18n="marketing.promo_type_pct">% off</option>
+                                                <option value="fixed" data-i18n="marketing.promo_type_fixed">Fixed $ off</option>
+                                                <option value="shipping" data-i18n="marketing.promo_type_ship">Free shipping</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-3 py-2"><input type="number" id="promo-2-value" min="0" step="0.01" class="w-20 border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="number" id="promo-2-minCart" min="0" step="1" class="w-20 border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="date" id="promo-2-start" class="border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2"><input type="date" id="promo-2-end" class="border border-gray-300 rounded px-2 py-1 text-sm"></td>
+                                        <td class="px-3 py-2 text-center"><input type="checkbox" id="promo-2-active" class="rounded border-gray-300 text-primary-600"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="mt-2 text-xs text-gray-500" data-i18n="marketing.promo_hint">For “Free shipping”, value is ignored (set min cart if needed).</p>
+                        <button type="button" id="mkt-save-promo" class="mt-4 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-md" data-i18n="marketing.save_promo">Save promotions</button>
+                        <p id="mkt-msg-promo" class="mt-3 text-sm text-green-600 hidden" role="status"></p>
+                    </div>
+                </div>
+
+                <div id="mkt-panel-referral" class="mkt-panel hidden">
+                    <div class="bg-white rounded-lg shadow-md border border-gray-100 p-6 max-w-2xl">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-1" data-i18n="marketing.referral_title">Referral &amp; promotion rewards</h2>
+                        <p class="text-sm text-gray-500 mb-4" data-i18n="marketing.referral_desc">Reward referrers and new customers when tracked links convert.</p>
+                        <label class="flex items-center gap-2 text-sm text-gray-800 mb-4">
+                            <input type="checkbox" id="mkt-referral-enabled" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span data-i18n="marketing.referral_enabled">Enable referral program</span>
+                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.referral_referee">New user reward ($ store credit)</label>
+                        <input type="number" id="mkt-referral-referee" min="0" step="1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.referral_referrer">Referrer reward ($) after unlock</label>
+                        <input type="number" id="mkt-referral-referrer" min="0" step="1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.referral_min_order">Referee min. first order ($) to unlock referrer payout</label>
+                        <input type="number" id="mkt-referral-min-order" min="0" step="1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-3 text-sm">
+                        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="marketing.referral_days">Attribution window (days)</label>
+                        <input type="number" id="mkt-referral-days" min="1" step="1" class="w-full max-w-xs border border-gray-300 rounded-md px-3 py-2 mb-4 text-sm">
+                        <button type="button" id="mkt-save-referral" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-md" data-i18n="marketing.save_referral">Save referral settings</button>
+                        <p id="mkt-msg-referral" class="mt-3 text-sm text-green-600 hidden" role="status"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/admin-marketing.js"></script>
+    <script src="js/admin-i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.APGAdminI18n) APGAdminI18n.init();
+
+            var TAB_ON = 'mkt-tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-primary-600 text-primary-700 bg-white -mb-px';
+            var TAB_OFF = 'mkt-tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-800 bg-transparent -mb-px';
+
+            function showMktTab(name) {
+                ['rebate', 'promo', 'referral'].forEach(function (n) {
+                    var panel = document.getElementById('mkt-panel-' + n);
+                    var btn = document.getElementById('mkt-tab-' + n);
+                    if (!panel || !btn) return;
+                    var on = n === name;
+                    panel.classList.toggle('hidden', !on);
+                    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+                    btn.className = on ? TAB_ON : TAB_OFF;
+                });
+            }
+
+            document.querySelectorAll('[data-mkt-tab]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    showMktTab(btn.getAttribute('data-mkt-tab'));
+                });
+            });
+
+            function fillAll(cfg) {
+                var r = cfg.rebate;
+                var el = function (id) { return document.getElementById(id); };
+                if (el('mkt-rebate-enabled')) el('mkt-rebate-enabled').checked = !!r.enabled;
+                if (el('mkt-rebate-percent')) el('mkt-rebate-percent').value = r.orderRebatePercent;
+                if (el('mkt-rebate-settlement')) el('mkt-rebate-settlement').value = r.settlementDays;
+                if (el('mkt-rebate-min')) el('mkt-rebate-min').value = r.minOrderForRebate;
+
+                if (el('mkt-promo-enabled')) el('mkt-promo-enabled').checked = !!cfg.promotions.enabled;
+                for (var i = 0; i < 3; i++) {
+                    var row = cfg.promotions.rows[i];
+                    if (!row) continue;
+                    if (el('promo-' + i + '-title')) el('promo-' + i + '-title').value = row.title || '';
+                    if (el('promo-' + i + '-type')) el('promo-' + i + '-type').value = row.type || 'percent';
+                    if (el('promo-' + i + '-value')) el('promo-' + i + '-value').value = row.value;
+                    if (el('promo-' + i + '-minCart')) el('promo-' + i + '-minCart').value = row.minCart;
+                    if (el('promo-' + i + '-start')) el('promo-' + i + '-start').value = row.start || '';
+                    if (el('promo-' + i + '-end')) el('promo-' + i + '-end').value = row.end || '';
+                    if (el('promo-' + i + '-active')) el('promo-' + i + '-active').checked = !!row.active;
+                }
+
+                var f = cfg.referral;
+                if (el('mkt-referral-enabled')) el('mkt-referral-enabled').checked = !!f.enabled;
+                if (el('mkt-referral-referee')) el('mkt-referral-referee').value = f.refereeCredit;
+                if (el('mkt-referral-referrer')) el('mkt-referral-referrer').value = f.referrerCredit;
+                if (el('mkt-referral-min-order')) el('mkt-referral-min-order').value = f.minOrderToUnlock;
+                if (el('mkt-referral-days')) el('mkt-referral-days').value = f.attributionDays;
+            }
+
+            function readPromoRows() {
+                var rows = [];
+                for (var i = 0; i < 3; i++) {
+                    var t = (document.getElementById('promo-' + i + '-type') || {}).value || 'percent';
+                    rows.push({
+                        title: (document.getElementById('promo-' + i + '-title') || {}).value || '',
+                        type: t === 'fixed' || t === 'shipping' ? t : 'percent',
+                        value: Number((document.getElementById('promo-' + i + '-value') || {}).value) || 0,
+                        minCart: Number((document.getElementById('promo-' + i + '-minCart') || {}).value) || 0,
+                        start: (document.getElementById('promo-' + i + '-start') || {}).value || '',
+                        end: (document.getElementById('promo-' + i + '-end') || {}).value || '',
+                        active: !!(document.getElementById('promo-' + i + '-active') || {}).checked
+                    });
+                }
+                return rows;
+            }
+
+            if (window.APGAdminMarketing) {
+                fillAll(APGAdminMarketing.load());
+            }
+
+            function showMsg(id, key) {
+                var p = document.getElementById(id);
+                if (p && window.APGAdminI18n) {
+                    p.textContent = APGAdminI18n.t(key);
+                    p.classList.remove('hidden');
+                    window.setTimeout(function () { p.classList.add('hidden'); }, 3500);
+                }
+            }
+
+            document.getElementById('mkt-save-rebate').addEventListener('click', function () {
+                var cfg = APGAdminMarketing.load();
+                cfg.rebate = {
+                    enabled: document.getElementById('mkt-rebate-enabled').checked,
+                    orderRebatePercent: Number(document.getElementById('mkt-rebate-percent').value) || 0,
+                    settlementDays: Number(document.getElementById('mkt-rebate-settlement').value) || 30,
+                    minOrderForRebate: Number(document.getElementById('mkt-rebate-min').value) || 0
+                };
+                APGAdminMarketing.save(cfg);
+                showMsg('mkt-msg-rebate', 'marketing.saved_rebate');
+            });
+
+            document.getElementById('mkt-save-promo').addEventListener('click', function () {
+                var cfg = APGAdminMarketing.load();
+                cfg.promotions.enabled = document.getElementById('mkt-promo-enabled').checked;
+                cfg.promotions.rows = readPromoRows();
+                APGAdminMarketing.save(cfg);
+                showMsg('mkt-msg-promo', 'marketing.saved_promo');
+            });
+
+            document.getElementById('mkt-save-referral').addEventListener('click', function () {
+                var cfg = APGAdminMarketing.load();
+                cfg.referral = {
+                    enabled: document.getElementById('mkt-referral-enabled').checked,
+                    referrerCredit: Number(document.getElementById('mkt-referral-referrer').value) || 0,
+                    refereeCredit: Number(document.getElementById('mkt-referral-referee').value) || 0,
+                    minOrderToUnlock: Number(document.getElementById('mkt-referral-min-order').value) || 0,
+                    attributionDays: Number(document.getElementById('mkt-referral-days').value) || 30
+                };
+                APGAdminMarketing.save(cfg);
+                showMsg('mkt-msg-referral', 'marketing.saved_referral');
+            });
+
+            var st = document.getElementById('sidebar-toggle');
+            if (st) {
+                st.addEventListener('click', function () {
+                    document.querySelector('.sidebar').classList.toggle('collapsed');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
