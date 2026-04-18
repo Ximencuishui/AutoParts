@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist | AutoParts Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#0066ff', 600: '#0052cc', 700: '#003d99',
+                        },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }</style>
+    <script src="js/auth.js"></script>
+    <script>
+        (function () {
+            if (!window.APGAuth || !APGAuth.isLoggedIn()) {
+                window.location.replace('login.html?next=wishlist.html');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center py-4">
+            <div class="flex items-center space-x-2">
+                <a href="index.html"><img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-12"></a>
+                <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600">Home</a>
+                <a href="shop.html" class="text-gray-600 hover:text-primary-600">Products</a>
+                <a href="index.html#about" class="text-gray-600 hover:text-primary-600">About</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-primary-600">Contact</a>
+            </nav>
+            <a href="cart.html" class="text-gray-600 hover:text-primary-600 relative">
+                <i class="fas fa-shopping-cart text-2xl"></i>
+                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3 text-sm">
+            <a href="index.html" class="text-gray-500 hover:text-primary-600">Home</a> <span class="text-gray-400">/</span>
+            <span class="text-gray-700 font-medium">Wishlist</span>
+        </div>
+    </div>
+
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-8">My wishlist</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <a href="product-detail.html" class="block h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/d5ee5b4a29e6cd14ee4f52ae0b4ed05b~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=xrxHPF2Z9pYCYuBKzigaGtrs%2Fxc%3D" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    </a>
+                    <div class="p-4">
+                        <a href="product-detail.html" class="font-semibold text-lg hover:text-primary-600">Front Grille Assembly</a>
+                        <p class="text-gray-500 text-sm mt-1">Ford Explorer 2020–2022</p>
+                        <p class="text-xl font-bold text-primary-600 mt-2">$149.99</p>
+                        <div class="mt-4 flex gap-2">
+                            <a href="cart.html" class="flex-1 text-center bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-md text-sm font-medium">Add to cart</a>
+                            <button type="button" class="px-3 border border-gray-300 rounded-md hover:bg-gray-50" title="Remove"><i class="fas fa-trash text-gray-500"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <a href="product-detail.html" class="block h-48 overflow-hidden">
+                        <img src="https://p3-doubao-search-sign.byteimg.com/labis/7834575e13ab1314440ec8f670ac5858~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=twBovW4tdwkiCHwbqlRPkpMS2do%3D" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    </a>
+                    <div class="p-4">
+                        <a href="product-detail.html" class="font-semibold text-lg hover:text-primary-600">Cylinder Head</a>
+                        <p class="text-gray-500 text-sm mt-1">Ford Mustang 2018–2022</p>
+                        <p class="text-xl font-bold text-primary-600 mt-2">$599.99</p>
+                        <div class="mt-4 flex gap-2">
+                            <a href="cart.html" class="flex-1 text-center bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-md text-sm font-medium">Add to cart</a>
+                            <button type="button" class="px-3 border border-gray-300 rounded-md hover:bg-gray-50"><i class="fas fa-trash text-gray-500"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <a href="product-detail.html" class="block h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/2897ec4e205ef1b1277ce1c2e9ca04f4~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=VE15kQ902xBLyVVV2BOEL%2B57Lzo%3D" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    </a>
+                    <div class="p-4">
+                        <a href="product-detail.html" class="font-semibold text-lg hover:text-primary-600">Front Grille</a>
+                        <p class="text-gray-500 text-sm mt-1">Lincoln Nautilus 2021–2022</p>
+                        <p class="text-xl font-bold text-primary-600 mt-2">$189.99</p>
+                        <div class="mt-4 flex gap-2">
+                            <a href="cart.html" class="flex-1 text-center bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-md text-sm font-medium">Add to cart</a>
+                            <button type="button" class="px-3 border border-gray-300 rounded-md hover:bg-gray-50"><i class="fas fa-trash text-gray-500"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-8 text-center text-gray-500 text-sm">Wishlist is saved to your account for this prototype session.</p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8 text-center text-sm text-gray-400">
+        <a href="account.html" class="hover:text-white">Back to account</a> · <a href="privacy.html" class="hover:text-white">Privacy</a>
+    </footer>
+</body>
+</html>

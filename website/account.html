@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account | AutoParts Global</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f0ff',
+                            100: '#b3d1ff',
+                            200: '#80b3ff',
+                            300: '#4d94ff',
+                            400: '#1a75ff',
+                            500: '#0066ff',
+                            600: '#0052cc',
+                            700: '#003d99',
+                            800: '#002966',
+                            900: '#001433',
+                        },
+                        secondary: {
+                            50: '#f0f0f0',
+                            100: '#d1d1d1',
+                            200: '#b3b3b3',
+                            300: '#949494',
+                            400: '#757575',
+                            500: '#666666',
+                            600: '#525252',
+                            700: '#3d3d3d',
+                            800: '#292929',
+                            900: '#141414',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: #0066ff;
+            border-bottom: 2px solid #0066ff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-input:focus {
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+        }
+        
+        .social-button {
+            transition: all 0.3s ease;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0066ff;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0052cc;
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.hidden {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <a href="index.html">
+                        <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-12">
+                    </a>
+                    <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="shop.html" class="text-gray-600 hover:text-primary-600 transition-colors">Products</a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+                </nav>
+                
+                <!-- Search, User, Cart Icons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search parts..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent w-40 md:w-64">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    
+                    <!-- User Account -->
+                    <div class="relative group">
+                        <button class="text-primary-600 hover:text-primary-800 transition-colors">
+                            <i class="fas fa-user-circle text-2xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-52 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <div id="auth-menu-guest">
+                                <a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Sign In</a>
+                                <a href="register.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Register</a>
+                            </div>
+                            <div id="auth-menu-signed-in" class="hidden">
+                                <p class="px-4 py-2 text-xs text-gray-500 border-b border-gray-100" id="nav-user-label">Account</p>
+                                <a href="account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">My Account</a>
+                                <a href="orders.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Orders</a>
+                                <a href="wishlist.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Wishlist</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white" id="logout-btn">Sign Out</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative text-gray-600 hover:text-primary-600 transition-colors" aria-label="Shopping cart">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </a>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden text-gray-600 hover:text-primary-600 transition-colors" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-x-full transition-transform duration-300 ease-in-out" id="mobile-menu">
+            <div class="px-4 py-2">
+                <a href="index.html" class="block py-2 text-gray-600">Home</a>
+                <a href="shop.html" class="block py-2 text-gray-600">Products</a>
+                <a href="index.html#about" class="block py-2 text-gray-600">About Us</a>
+                <a href="index.html#contact" class="block py-2 text-gray-600">Contact</a>
+                <div class="relative mt-2">
+                    <input type="text" placeholder="Search parts..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-500 hover:text-primary-600 transition-colors">Home</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <span class="text-gray-700">My Account</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Not signed in -->
+    <section id="guest-gate" class="py-16 px-4">
+        <div class="max-w-lg mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-primary-600 to-primary-800 px-8 py-10 text-center text-white">
+                <i class="fas fa-user-lock text-4xl mb-4 opacity-90"></i>
+                <h1 class="text-2xl font-bold mb-2">Your account area</h1>
+                <p class="text-primary-100 text-sm">Sign in to view orders, wishlist, addresses, and profile settings.</p>
+            </div>
+            <div class="p-8 text-center">
+                <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+                    <a href="login.html" class="inline-flex justify-center items-center bg-primary-600 hover:bg-primary-700 text-white font-semibold px-8 py-3 rounded-md transition-colors">
+                        Sign In
+                    </a>
+                    <a href="register.html" class="inline-flex justify-center items-center border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold px-8 py-3 rounded-md transition-colors">
+                        Create account
+                    </a>
+                </div>
+                <p class="text-sm text-gray-500 mb-2">Try the demo (no registration needed):</p>
+                <p class="text-sm text-gray-700 font-mono bg-gray-50 rounded-md py-2 px-3 inline-block">
+                    demo@autoparts.global · demo123
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Section (signed in) -->
+    <section id="account-authenticated" class="py-12 hidden">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <!-- Account Tabs -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="border-b">
+                        <div class="flex overflow-x-auto">
+                            <button class="tab-button active px-8 py-4 font-semibold text-lg" data-tab="dashboard">Dashboard</button>
+                            <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="orders">Orders</button>
+                            <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="profile">Profile</button>
+                            <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="wishlist">Wishlist</button>
+                            <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="address">Address</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab Content -->
+                    <div class="p-8">
+                        <!-- Dashboard Tab -->
+                        <div id="dashboard" class="tab-content active">
+                            <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Welcome Card -->
+                                <div class="bg-gradient-to-r from-primary-600 to-primary-800 text-white rounded-lg p-6">
+                                    <h3 class="text-xl font-semibold mb-1">Welcome back, <span id="welcome-user-name">Member</span>!</h3>
+                                    <p class="text-primary-100 text-sm mb-1" id="dashboard-user-email">—</p>
+                                    <p class="mb-4 text-primary-50 text-sm">Here's an overview of your account.</p>
+                                    <div id="welcome-toast" class="hidden mb-4 text-sm bg-white/20 rounded-md px-3 py-2 text-left">
+                                        <i class="fas fa-check-circle mr-1"></i> Your account is ready. Thanks for joining AutoParts Global.
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <div class="text-3xl font-bold">3</div>
+                                            <div class="text-sm opacity-80">Pending Orders</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-3xl font-bold">$245.99</div>
+                                            <div class="text-sm opacity-80">Total Spent</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-3xl font-bold">12</div>
+                                            <div class="text-sm opacity-80">Wishlist Items</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quick Links -->
+                                <div class="bg-gray-50 rounded-lg p-6">
+                                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <a href="orders.html" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                                            <i class="fas fa-box text-primary-600 mr-3"></i>
+                                            <span>My Orders</span>
+                                        </a>
+                                        <a href="wishlist.html" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                                            <i class="fas fa-heart text-primary-600 mr-3"></i>
+                                            <span>Wishlist</span>
+                                        </a>
+                                        <a href="account.html" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                                            <i class="fas fa-map-marker-alt text-primary-600 mr-3"></i>
+                                            <span>Addresses</span>
+                                        </a>
+                                        <a href="account.html" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                                            <i class="fas fa-user-cog text-primary-600 mr-3"></i>
+                                            <span>Settings</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Orders -->
+                            <div class="mb-8">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-xl font-semibold">Recent Orders</h3>
+                                    <a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View All</a>
+                                </div>
+                                
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-gray-700">
+                                        <thead>
+                                            <tr class="bg-gray-50">
+                                                <th class="px-4 py-3 text-left">Order #</th>
+                                                <th class="px-4 py-3 text-left">Date</th>
+                                                <th class="px-4 py-3 text-left">Status</th>
+                                                <th class="px-4 py-3 text-left">Total</th>
+                                                <th class="px-4 py-3 text-left">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-200">
+                                                <td class="px-4 py-4">#ORD-7845</td>
+                                                <td class="px-4 py-4">April 15, 2023</td>
+                                                <td class="px-4 py-4"><span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Processing</span></td>
+                                                <td class="px-4 py-4">$89.99</td>
+                                                <td class="px-4 py-4"><a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View</a></td>
+                                            </tr>
+                                            <tr class="border-b border-gray-200">
+                                                <td class="px-4 py-4">#ORD-7723</td>
+                                                <td class="px-4 py-4">April 10, 2023</td>
+                                                <td class="px-4 py-4"><span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Shipped</span></td>
+                                                <td class="px-4 py-4">$124.50</td>
+                                                <td class="px-4 py-4"><a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-4">#ORD-7652</td>
+                                                <td class="px-4 py-4">April 5, 2023</td>
+                                                <td class="px-4 py-4"><span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Delivered</span></td>
+                                                <td class="px-4 py-4">$31.50</td>
+                                                <td class="px-4 py-4"><a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!-- Recently Viewed Products -->
+                            <div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-xl font-semibold">Recently Viewed</h3>
+                                    <a href="shop.html" class="text-primary-600 hover:text-primary-800 transition-colors">Browse catalog</a>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <!-- Product 1 -->
+                                    <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="h-32 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/d5ee5b4a29e6cd14ee4f52ae0b4ed05b~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=xrxHPF2Z9pYCYuBKzigaGtrs%2Fxc%3D" alt="Front Grille" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-3">
+                                            <h4 class="text-sm font-medium truncate">Front Grille Assembly</h4>
+                                            <div class="flex justify-between items-center mt-1">
+                                                <span class="text-primary-600 font-bold text-sm">$149.99</span>
+                                                <button class="text-gray-400 hover:text-primary-600 transition-colors">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Product 2 -->
+                                    <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="h-32 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/869926994296307762~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=d0jR2E3YzvFJGZkAup4hcJvx%2B%2FI%3D" alt="Camshaft" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-3">
+                                            <h4 class="text-sm font-medium truncate">Camshaft</h4>
+                                            <div class="flex justify-between items-center mt-1">
+                                                <span class="text-primary-600 font-bold text-sm">$249.99</span>
+                                                <button class="text-gray-400 hover:text-primary-600 transition-colors">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Product 3 -->
+                                    <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="h-32 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/isp-i18n-media/image/6fe14b393f9999e6f5e85e02b87fa925~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=1ZHfpOakIaFp23rKOU%2B%2Fj6Hv0DE%3D" alt="Headlights" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-3">
+                                            <h4 class="text-sm font-medium truncate">LED Headlights</h4>
+                                            <div class="flex justify-between items-center mt-1">
+                                                <span class="text-primary-600 font-bold text-sm">$299.99</span>
+                                                <button class="text-gray-400 hover:text-primary-600 transition-colors">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Product 4 -->
+                                    <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="h-32 overflow-hidden">
+                                            <img src="https://p11-doubao-search-sign.byteimg.com/labis/f31b9b3e75b93ada85d5a6d6902ea687~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=tv4e061SlqyHwdDwm%2FhQ8GvEUVg%3D" alt="Emblem" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-3">
+                                            <h4 class="text-sm font-medium truncate">Ford Emblem</h4>
+                                            <div class="flex justify-between items-center mt-1">
+                                                <span class="text-primary-600 font-bold text-sm">$39.99</span>
+                                                <button class="text-gray-400 hover:text-primary-600 transition-colors">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Orders Tab -->
+                        <div id="orders" class="tab-content">
+                            <h2 class="text-2xl font-bold mb-6">My Orders</h2>
+                            
+                            <!-- Order Filters -->
+                            <div class="flex flex-wrap justify-between items-center mb-6">
+                                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                                    <span class="text-gray-600">Filter by:</span>
+                                    <select class="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                        <option value="all">All Orders</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="shipped">Shipped</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="relative">
+                                    <input type="text" placeholder="Search orders..." class="pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Orders List -->
+                            <div class="space-y-6">
+                                <!-- Order 1 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+                                        <div>
+                                            <div class="flex items-center">
+                                                <h3 class="text-lg font-semibold">Order #ORD-7845</h3>
+                                                <span class="ml-4 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Processing</span>
+                                            </div>
+                                            <p class="text-gray-500 text-sm mt-1">April 15, 2023</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="font-semibold">$89.99</div>
+                                            <p class="text-gray-500 text-sm mt-1">2 items</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                            <div class="flex items-center mb-4 md:mb-0">
+                                                <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                                    <img src="https://p26-doubao-search-sign.byteimg.com/labis/981935be9996e6b7f50786b03a002cf6~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=bzSmrgRqS2PLi6lYGU%2FwWd%2FUsQY%3D" alt="Front Bumper Lip" class="w-full h-full object-cover">
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium">Front Bumper Lip</h4>
+                                                    <p class="text-gray-500 text-sm">For Ford Explorer 2020-2022</p>
+                                                    <p class="text-gray-500 text-sm">Qty: 1</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex space-x-3">
+                                                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                                                    View Details
+                                                </button>
+                                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors">
+                                                    Track Order
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order 2 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+                                        <div>
+                                            <div class="flex items-center">
+                                                <h3 class="text-lg font-semibold">Order #ORD-7723</h3>
+                                                <span class="ml-4 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Shipped</span>
+                                            </div>
+                                            <p class="text-gray-500 text-sm mt-1">April 10, 2023</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="font-semibold">$124.50</div>
+                                            <p class="text-gray-500 text-sm mt-1">1 item</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                            <div class="flex items-center mb-4 md:mb-0">
+                                                <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                                    <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/869926994296307762~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=d0jR2E3YzvFJGZkAup4hcJvx%2B%2FI%3D" alt="Camshaft" class="w-full h-full object-cover">
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium">Camshaft</h4>
+                                                    <p class="text-gray-500 text-sm">For Ford F-150 2018-2022</p>
+                                                    <p class="text-gray-500 text-sm">Qty: 1</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex space-x-3">
+                                                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                                                    View Details
+                                                </button>
+                                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors">
+                                                    Track Order
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order 3 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+                                        <div>
+                                            <div class="flex items-center">
+                                                <h3 class="text-lg font-semibold">Order #ORD-7652</h3>
+                                                <span class="ml-4 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Delivered</span>
+                                            </div>
+                                            <p class="text-gray-500 text-sm mt-1">April 5, 2023</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="font-semibold">$31.50</div>
+                                            <p class="text-gray-500 text-sm mt-1">1 item</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                            <div class="flex items-center mb-4 md:mb-0">
+                                                <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/f31b9b3e75b93ada85d5a6d6902ea687~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=tv4e061SlqyHwdDwm%2FhQ8GvEUVg%3D" alt="Emblem" class="w-full h-full object-cover">
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium">Ford Emblem</h4>
+                                                    <p class="text-gray-500 text-sm">For Ford Explorer 2020-2022</p>
+                                                    <p class="text-gray-500 text-sm">Qty: 1</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex space-x-3">
+                                                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                                                    View Details
+                                                </button>
+                                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors">
+                                                    Leave Review
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <div class="flex justify-center mt-8">
+                                <nav class="inline-flex rounded-md shadow">
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="shop.html" class="py-2 px-4 bg-primary-600 text-white border border-primary-600">1</a>
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 hover:bg-gray-50">2</a>
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 hover:bg-gray-50">3</a>
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Tab -->
+                        <div id="profile" class="tab-content">
+                            <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
+                            
+                            <form>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">First Name</label>
+                                        <input type="text" id="profile-firstname" value="" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Last Name</label>
+                                        <input type="text" id="profile-lastname" value="" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Email Address</label>
+                                        <input type="email" id="profile-email" value="" readonly class="form-input w-full border border-gray-200 bg-gray-50 rounded-md px-4 py-2 focus:outline-none text-gray-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Phone Number</label>
+                                        <input type="tel" value="+1 (555) 123-4567" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Date of Birth</label>
+                                        <input type="date" value="1990-01-15" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Company (Optional)</label>
+                                        <input type="text" value="Auto Repair Shop" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                </div>
+                                
+                                <div class="border-t border-gray-200 pt-6 mb-6">
+                                    <h3 class="text-xl font-semibold mb-4">Change Password</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-gray-700 mb-2">Current Password</label>
+                                            <input type="password" placeholder="Enter current password" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-700 mb-2">New Password</label>
+                                            <input type="password" placeholder="Enter new password" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-gray-700 mb-2">Confirm New Password</label>
+                                            <input type="password" placeholder="Confirm new password" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-end">
+                                    <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-md font-semibold transition-colors">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Wishlist Tab -->
+                        <div id="wishlist" class="tab-content">
+                            <h2 class="text-2xl font-bold mb-6">My Wishlist</h2>
+                            
+                            <!-- Wishlist Filters -->
+                            <div class="flex flex-wrap justify-between items-center mb-6">
+                                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                                    <span class="text-gray-600">Filter by:</span>
+                                    <select class="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                        <option value="all">All Products</option>
+                                        <option value="engine">Engine Parts</option>
+                                        <option value="body">Body Parts</option>
+                                        <option value="electrical">Electrical</option>
+                                        <option value="suspension">Suspension</option>
+                                        <option value="brakes">Brakes</option>
+                                    </select>
+                                </div>
+                                <div class="relative">
+                                    <input type="text" placeholder="Search wishlist..." class="pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Wishlist Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Wishlist Item 1 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="relative">
+                                        <div class="h-48 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/d5ee5b4a29e6cd14ee4f52ae0b4ed05b~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=xrxHPF2Z9pYCYuBKzigaGtrs%2Fxc%3D" alt="Front Grille" class="w-full h-full object-cover">
+                                        </div>
+                                        <button class="absolute top-3 right-3 bg-white text-red-500 p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2">Front Grille Assembly</h3>
+                                        <p class="text-gray-600 text-sm mb-2">For Ford Explorer 2020-2022</p>
+                                        <div class="flex items-center mb-3">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <span class="text-gray-500 text-xs ml-2">(42 reviews)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-primary-600">$149.99</span>
+                                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Wishlist Item 2 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="relative">
+                                        <div class="h-48 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/869926994296307762~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=d0jR2E3YzvFJGZkAup4hcJvx%2B%2FI%3D" alt="Camshaft" class="w-full h-full object-cover">
+                                        </div>
+                                        <button class="absolute top-3 right-3 bg-white text-red-500 p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2">Camshaft</h3>
+                                        <p class="text-gray-600 text-sm mb-2">For Ford F-150 2018-2022</p>
+                                        <div class="flex items-center mb-3">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <span class="text-gray-500 text-xs ml-2">(56 reviews)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-primary-600">$249.99</span>
+                                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Wishlist Item 3 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="relative">
+                                        <div class="h-48 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/isp-i18n-media/image/6fe14b393f9999e6f5e85e02b87fa925~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=1ZHfpOakIaFp23rKOU%2B%2Fj6Hv0DE%3D" alt="Headlights" class="w-full h-full object-cover">
+                                        </div>
+                                        <button class="absolute top-3 right-3 bg-white text-red-500 p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2">LED Headlights</h3>
+                                        <p class="text-gray-600 text-sm mb-2">For Ford Explorer 2020-2022</p>
+                                        <div class="flex items-center mb-3">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <span class="text-gray-500 text-xs ml-2">(32 reviews)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-primary-600">$299.99</span>
+                                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Wishlist Item 4 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="relative">
+                                        <div class="h-48 overflow-hidden">
+                                            <img src="https://p11-doubao-search-sign.byteimg.com/labis/f31b9b3e75b93ada85d5a6d6902ea687~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=tv4e061SlqyHwdDwm%2FhQ8GvEUVg%3D" alt="Emblem" class="w-full h-full object-cover">
+                                        </div>
+                                        <button class="absolute top-3 right-3 bg-white text-red-500 p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2">Ford Emblem</h3>
+                                        <p class="text-gray-600 text-sm mb-2">For Ford Explorer 2020-2022</p>
+                                        <div class="flex items-center mb-3">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <span class="text-gray-500 text-xs ml-2">(45 reviews)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-primary-600">$39.99</span>
+                                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Wishlist Item 5 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="relative">
+                                        <div class="h-48 overflow-hidden">
+                                            <img src="https://p3-doubao-search-sign.byteimg.com/labis/7834575e13ab1314440ec8f670ac5858~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=twBovW4tdwkiCHwbqlRPkpMS2do%3D" alt="Cylinder Head" class="w-full h-full object-cover">
+                                        </div>
+                                        <button class="absolute top-3 right-3 bg-white text-red-500 p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2">Cylinder Head</h3>
+                                        <p class="text-gray-600 text-sm mb-2">For Ford Mustang 2018-2022</p>
+                                        <div class="flex items-center mb-3">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <span class="text-gray-500 text-xs ml-2">(37 reviews)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-primary-600">$599.99</span>
+                                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Wishlist Item 6 -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                    <div class="relative">
+                                        <div class="h-48 overflow-hidden">
+                                            <img src="https://p26-doubao-search-sign.byteimg.com/labis/2a7e2f493d0af9c6ea275dc409a9fa16~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=jP2bev5jdv2Lgpk3Cnno6J6HjlQ%3D" alt="Piston Set" class="w-full h-full object-cover">
+                                        </div>
+                                        <button class="absolute top-3 right-3 bg-white text-red-500 p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2">Piston Set</h3>
+                                        <p class="text-gray-600 text-sm mb-2">For Ford F-150 2019-2022</p>
+                                        <div class="flex items-center mb-3">
+                                            <div class="flex text-yellow-400">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                            </div>
+                                            <span class="text-gray-500 text-xs ml-2">(29 reviews)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xl font-bold text-primary-600">$349.99</span>
+                                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors">
+                                                Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <div class="flex justify-center mt-8">
+                                <nav class="inline-flex rounded-md shadow">
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="shop.html" class="py-2 px-4 bg-primary-600 text-white border border-primary-600">1</a>
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 hover:bg-gray-50">2</a>
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 hover:bg-gray-50">3</a>
+                                    <a href="shop.html" class="py-2 px-4 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                        <!-- Address Tab -->
+                        <div id="address" class="tab-content">
+                            <h2 class="text-2xl font-bold mb-6">My Addresses</h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Shipping Address -->
+                                <div class="bg-white rounded-lg shadow-sm p-6 relative">
+                                    <div class="absolute top-4 right-4 flex space-x-2">
+                                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-400 hover:text-red-600 transition-colors">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="mb-4">
+                                        <span class="bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">Default Shipping</span>
+                                    </div>
+                                    <h3 class="text-lg font-semibold mb-2">John Doe</h3>
+                                    <p class="text-gray-600 mb-1">123 Main Street</p>
+                                    <p class="text-gray-600 mb-1">Apt 4B</p>
+                                    <p class="text-gray-600 mb-1">New York, NY 10001</p>
+                                    <p class="text-gray-600 mb-4">United States</p>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                </div>
+                                
+                                <!-- Billing Address -->
+                                <div class="bg-white rounded-lg shadow-sm p-6 relative">
+                                    <div class="absolute top-4 right-4 flex space-x-2">
+                                        <button class="text-gray-400 hover:text-primary-600 transition-colors">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-400 hover:text-red-600 transition-colors">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="mb-4">
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Default Billing</span>
+                                    </div>
+                                    <h3 class="text-lg font-semibold mb-2">John Doe</h3>
+                                    <p class="text-gray-600 mb-1">123 Main Street</p>
+                                    <p class="text-gray-600 mb-1">Apt 4B</p>
+                                    <p class="text-gray-600 mb-1">New York, NY 10001</p>
+                                    <p class="text-gray-600 mb-4">United States</p>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Add New Address Button -->
+                            <button class="flex items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-primary-600 transition-colors">
+                                <div class="text-center">
+                                    <div class="bg-primary-100 text-primary-600 p-3 rounded-full inline-flex mb-3">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <h3 class="text-lg font-semibold">Add New Address</h3>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chat Assistant -->
+    <div class="fixed bottom-6 right-6 w-80 bg-white rounded-xl shadow-2xl overflow-hidden collapsed z-50" id="ai-chat-container">
+        <!-- Chat Header -->
+        <div class="bg-primary-600 text-white p-4 flex justify-between items-center cursor-pointer" id="ai-chat-header">
+            <div class="flex items-center">
+                <i class="fas fa-robot mr-2"></i>
+                <span class="font-semibold">AI Parts Assistant</span>
+            </div>
+            <button id="ai-chat-toggle">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </div>
+        
+        <!-- Chat Messages -->
+        <div class="h-80 overflow-y-auto p-4" id="ai-chat-messages">
+            <div class="flex mb-4">
+                <div class="bg-primary-100 text-primary-800 rounded-lg py-2 px-4 max-w-[80%]">
+                    <p>Hello! I'm your AI Parts Assistant. How can I help you find the right parts for your Ford or Lincoln vehicle today?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Input -->
+        <div class="border-t p-4">
+            <div class="flex">
+                <input type="text" id="ai-chat-input" placeholder="Ask about parts..." class="flex-1 border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <button id="ai-chat-send" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-r-md transition-colors">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <a href="index.html">
+                            <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-10">
+                        </a>
+                        <span class="text-xl font-bold">AutoParts Global</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Your trusted supplier of Ford and Lincoln parts. High quality, competitive prices, and fast shipping worldwide.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Products</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Product Categories -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Product Categories</h3>
+                    <ul class="space-y-3">
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Engine Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Body Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Electrical</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Suspension</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Brakes</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">All Categories</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates, promotions, and new products.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 rounded-l-md focus:outline-none text-gray-800">
+                            <button type="submit" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-r-md transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <p class="text-gray-400 text-sm">By subscribing, you agree to our <a href="privacy.html" class="text-primary-400 hover:text-white underline">Privacy Policy</a> and consent to receive updates from our company.</p>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2026 AutoParts Global. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="terms.html" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                        <a href="privacy.html" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                        <a href="shipping.html" class="text-gray-400 hover:text-white text-sm transition-colors">Shipping &amp; Returns</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var guest = document.getElementById('guest-gate');
+            var main = document.getElementById('account-authenticated');
+            var menuIn = document.getElementById('auth-menu-signed-in');
+            var menuOut = document.getElementById('auth-menu-guest');
+            var navLabel = document.getElementById('nav-user-label');
+
+            if (!guest || !main) return;
+
+            if (window.APGAuth.isLoggedIn()) {
+                guest.classList.add('hidden');
+                main.classList.remove('hidden');
+                if (menuIn) menuIn.classList.remove('hidden');
+                if (menuOut) menuOut.classList.add('hidden');
+                var s = window.APGAuth.getSession();
+                if (s) {
+                    var wn = document.getElementById('welcome-user-name');
+                    if (wn) wn.textContent = s.firstName + ' ' + s.lastName;
+                    var em = document.getElementById('dashboard-user-email');
+                    if (em) em.textContent = s.email;
+                    if (navLabel) navLabel.textContent = s.email;
+                    var fn = document.getElementById('profile-firstname');
+                    var ln = document.getElementById('profile-lastname');
+                    var pe = document.getElementById('profile-email');
+                    if (fn) fn.value = s.firstName;
+                    if (ln) ln.value = s.lastName;
+                    if (pe) pe.value = s.email;
+                }
+                var params = new URLSearchParams(location.search);
+                if (params.get('welcome') === '1') {
+                    var toast = document.getElementById('welcome-toast');
+                    if (toast) toast.classList.remove('hidden');
+                    history.replaceState({}, '', 'account.html');
+                }
+            } else {
+                guest.classList.remove('hidden');
+                main.classList.add('hidden');
+                if (menuIn) menuIn.classList.add('hidden');
+                if (menuOut) menuOut.classList.remove('hidden');
+            }
+        });
+    </script>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('-translate-x-full')) {
+                mobileMenu.classList.remove('-translate-x-full');
+                mobileMenu.classList.add('translate-x-0');
+            } else {
+                mobileMenu.classList.remove('translate-x-0');
+                mobileMenu.classList.add('-translate-x-full');
+            }
+        });
+        
+        // Tab Navigation
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and content
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.classList.add('text-gray-500');
+                });
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                button.classList.remove('text-gray-500');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        if (window.APGAuth && window.APGAuth.isLoggedIn()) {
+            var openTab = new URLSearchParams(location.search).get('tab');
+            if (openTab && document.getElementById(openTab)) {
+                var openBtn = document.querySelector('.tab-button[data-tab="' + openTab + '"]');
+                if (openBtn) openBtn.click();
+            }
+        }
+        
+        // AI Chat Assistant
+        const aiChatContainer = document.getElementById('ai-chat-container');
+        const aiChatHeader = document.getElementById('ai-chat-header');
+        const aiChatToggle = document.getElementById('ai-chat-toggle');
+        const aiChatMessages = document.getElementById('ai-chat-messages');
+        const aiChatInput = document.getElementById('ai-chat-input');
+        const aiChatSend = document.getElementById('ai-chat-send');
+        
+        aiChatHeader.addEventListener('click', () => {
+            if (aiChatContainer.classList.contains('collapsed')) {
+                aiChatContainer.classList.remove('collapsed');
+                aiChatContainer.classList.add('expanded');
+                aiChatToggle.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            } else {
+                aiChatContainer.classList.remove('expanded');
+                aiChatContainer.classList.add('collapsed');
+                aiChatToggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            }
+        });
+        
+        function sendMessage() {
+            const message = aiChatInput.value.trim();
+            if (message) {
+                // Add user message
+                aiChatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-primary-600 text-white rounded-lg py-2 px-4 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Clear input
+                aiChatInput.value = '';
+                
+                // Scroll to bottom
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    let response = '';
+                    
+                    if (message.toLowerCase().includes('order')) {
+                        response = 'I can help you track your order. Please provide your order number, and I\'ll check its status for you.';
+                    } else if (message.toLowerCase().includes('return') || message.toLowerCase().includes('refund')) {
+                        response = 'For returns and refunds, please visit our Returns & Refunds page or contact our customer service team. We offer a 30-day return policy on most items.';
+                    } else if (message.toLowerCase().includes('shipping')) {
+                        response = 'We offer free shipping within the continental United States. For international orders, shipping rates vary by destination. Would you like to check shipping costs to your location?';
+                    } else {
+                        response = 'I\'d be happy to help you with that. Could you please provide more details about your question?';
+                    }
+                    
+                    aiChatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="bg-primary-100 text-primary-800 rounded-lg py-2 px-4 max-w-[80%]">
+                                <p>${response}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Scroll to bottom
+                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        aiChatSend.addEventListener('click', sendMessage);
+        
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Logout
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (window.APGAuth) window.APGAuth.logout();
+                window.location.href = 'login.html';
+            });
+        }
+    </script>
+</body>
+</html>

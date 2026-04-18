@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | AutoParts Global</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f0ff',
+                            100: '#b3d1ff',
+                            200: '#80b3ff',
+                            300: '#4d94ff',
+                            400: '#1a75ff',
+                            500: '#0066ff',
+                            600: '#0052cc',
+                            700: '#003d99',
+                            800: '#002966',
+                            900: '#001433',
+                        },
+                        secondary: {
+                            50: '#f0f0f0',
+                            100: '#d1d1d1',
+                            200: '#b3b3b3',
+                            300: '#949494',
+                            400: '#757575',
+                            500: '#666666',
+                            600: '#525252',
+                            700: '#3d3d3d',
+                            800: '#292929',
+                            900: '#141414',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active .step-number {
+            background-color: #0066ff;
+            color: white;
+        }
+        
+        .step-indicator.completed .step-number {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .step-indicator.active .step-title {
+            color: #0066ff;
+            font-weight: 600;
+        }
+        
+        .step-indicator.completed .step-title {
+            color: #10b981;
+        }
+        
+        .step-line {
+            transition: all 0.3s ease;
+        }
+        
+        .step-line.active {
+            background-color: #0066ff;
+        }
+        
+        .step-line.completed {
+            background-color: #10b981;
+        }
+        
+        .form-input:focus {
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+        }
+        
+        .payment-method-card {
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method-card:hover {
+            border-color: #0066ff;
+        }
+        
+        .payment-method-card.selected {
+            border-color: #0066ff;
+            background-color: rgba(0, 102, 255, 0.05);
+        }
+        
+        .product-image {
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0066ff;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0052cc;
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.hidden {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <a href="index.html">
+                        <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-12">
+                    </a>
+                    <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="shop.html" class="text-gray-600 hover:text-primary-600 transition-colors">Products</a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+                </nav>
+                
+                <!-- Search, User, Cart Icons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search parts..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent w-40 md:w-64">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    
+                    <!-- User Account -->
+                    <div class="relative group">
+                        <button class="text-gray-600 hover:text-primary-600 transition-colors">
+                            <i class="fas fa-user-circle text-2xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">My Account</a>
+                            <a href="orders.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Orders</a>
+                            <a href="wishlist.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Wishlist</a>
+                            <a href="index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Sign Out</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative text-primary-600 hover:text-primary-800 transition-colors" aria-label="Shopping cart">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </a>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden text-gray-600 hover:text-primary-600 transition-colors" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-x-full transition-transform duration-300 ease-in-out" id="mobile-menu">
+            <div class="px-4 py-2">
+                <a href="index.html" class="block py-2 text-gray-600">Home</a>
+                <a href="shop.html" class="block py-2 text-gray-600">Products</a>
+                <a href="index.html#about" class="block py-2 text-gray-600">About Us</a>
+                <a href="index.html#contact" class="block py-2 text-gray-600">Contact</a>
+                <div class="relative mt-2">
+                    <input type="text" placeholder="Search parts..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-500 hover:text-primary-600 transition-colors">Home</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <a href="cart.html" class="text-gray-500 hover:text-primary-600 transition-colors">Shopping Cart</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <span class="text-gray-700">Checkout</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-8">Checkout</h1>
+            
+            <!-- Checkout Steps Indicator -->
+            <div class="flex items-center justify-between mb-12 max-w-3xl mx-auto">
+                <!-- Step 1 -->
+                <div class="step-indicator active completed flex flex-col items-center">
+                    <div class="step-number w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center mb-2">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title text-sm">Cart</div>
+                </div>
+                
+                <!-- Step Line 1 -->
+                <div class="step-line completed flex-1 h-1 bg-primary-600 mx-2"></div>
+                
+                <!-- Step 2 -->
+                <div class="step-indicator active flex flex-col items-center">
+                    <div class="step-number w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center mb-2">2</div>
+                    <div class="step-title text-sm">Information</div>
+                </div>
+                
+                <!-- Step Line 2 -->
+                <div class="step-line flex-1 h-1 bg-gray-300 mx-2"></div>
+                
+                <!-- Step 3 -->
+                <div class="step-indicator flex flex-col items-center">
+                    <div class="step-number w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mb-2">3</div>
+                    <div class="step-title text-sm text-gray-500">Shipping</div>
+                </div>
+                
+                <!-- Step Line 3 -->
+                <div class="step-line flex-1 h-1 bg-gray-300 mx-2"></div>
+                
+                <!-- Step 4 -->
+                <div class="step-indicator flex flex-col items-center">
+                    <div class="step-number w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mb-2">4</div>
+                    <div class="step-title text-sm text-gray-500">Payment</div>
+                </div>
+                
+                <!-- Step Line 4 -->
+                <div class="step-line flex-1 h-1 bg-gray-300 mx-2"></div>
+                
+                <!-- Step 5 -->
+                <div class="step-indicator flex flex-col items-center">
+                    <div class="step-number w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mb-2">5</div>
+                    <div class="step-title text-sm text-gray-500">Confirm</div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2">
+                    <!-- Contact Information -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xl font-semibold">Contact Information</h2>
+                        </div>
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" value="john.doe@example.com" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="marketing-emails" class="mr-2">
+                                <label for="marketing-emails" class="text-gray-700">Email me with news and offers</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Address -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                        <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+                            <h2 class="text-xl font-semibold">Shipping Address</h2>
+                            <div class="flex space-x-2">
+                                <button class="text-primary-600 hover:text-primary-800 transition-colors text-sm">
+                                    <i class="fas fa-plus-circle mr-1"></i> Add
+                                </button>
+                                <button class="text-primary-600 hover:text-primary-800 transition-colors text-sm">
+                                    <i class="fas fa-edit mr-1"></i> Edit
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="mb-6">
+                                <div class="flex items-center mb-4">
+                                    <input type="radio" name="address" id="address-1" checked class="mr-2">
+                                    <label for="address-1" class="text-gray-700 font-medium">John Doe</label>
+                                </div>
+                                <div class="pl-6 text-gray-600">
+                                    <p>123 Main Street</p>
+                                    <p>Apt 4B</p>
+                                    <p>New York, NY 10001</p>
+                                    <p>United States</p>
+                                    <p class="mt-2">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center mb-4">
+                                    <input type="radio" name="address" id="address-2" class="mr-2">
+                                    <label for="address-2" class="text-gray-700 font-medium">John Doe (Work)</label>
+                                </div>
+                                <div class="pl-6 text-gray-600">
+                                    <p>456 Business Ave</p>
+                                    <p>Suite 100</p>
+                                    <p>New York, NY 10002</p>
+                                    <p>United States</p>
+                                    <p class="mt-2">+1 (555) 987-6543</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Method -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xl font-semibold">Shipping Method</h2>
+                        </div>
+                        <div class="p-6">
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <input type="radio" name="shipping" id="shipping-1" checked class="mr-2">
+                                    <label for="shipping-1" class="text-gray-700 font-medium">Standard Shipping (5-7 business days)</label>
+                                </div>
+                                <div class="pl-6 text-gray-600">$12.99</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <input type="radio" name="shipping" id="shipping-2" class="mr-2">
+                                    <label for="shipping-2" class="text-gray-700 font-medium">Expedited Shipping (2-3 business days)</label>
+                                </div>
+                                <div class="pl-6 text-gray-600">$24.99</div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center mb-2">
+                                    <input type="radio" name="shipping" id="shipping-3" class="mr-2">
+                                    <label for="shipping-3" class="text-gray-700 font-medium">Express Shipping (1 business day)</label>
+                                </div>
+                                <div class="pl-6 text-gray-600">$39.99</div>
+                            </div>
+                            
+                            <div class="mt-6 bg-blue-50 p-4 rounded-lg">
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <h3 class="font-semibold text-blue-800 mb-1">Free Shipping Eligibility</h3>
+                                        <p class="text-blue-700">Add $40.01 more to your order to qualify for free standard shipping.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Method -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xl font-semibold">Payment Method</h2>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <!-- Credit Card -->
+                                <div class="payment-method-card selected border-2 border-primary-500 rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fas fa-credit-card text-blue-600 text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium">Credit Card</h3>
+                                                <p class="text-gray-500 text-sm">Visa ending in 4242</p>
+                                            </div>
+                                        </div>
+                                        <input type="radio" name="payment" id="payment-1" checked class="w-5 h-5 text-primary-600">
+                                    </div>
+                                </div>
+                                
+                                <!-- PayPal -->
+                                <div class="payment-method-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mr-3">
+                                                <i class="fab fa-paypal text-blue-600 text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium">PayPal</h3>
+                                                <p class="text-gray-500 text-sm">john.doe@example.com</p>
+                                            </div>
+                                        </div>
+                                        <input type="radio" name="payment" id="payment-2" class="w-5 h-5 text-primary-600">
+                                    </div>
+                                </div>
+                                
+                                <!-- Apple Pay -->
+                                <div class="payment-method-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3">
+                                                <i class="fab fa-apple-pay text-white text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium">Apple Pay</h3>
+                                                <p class="text-gray-500 text-sm">Use Apple Pay for faster checkout</p>
+                                            </div>
+                                        </div>
+                                        <input type="radio" name="payment" id="payment-3" class="w-5 h-5 text-primary-600">
+                                    </div>
+                                </div>
+                                
+                                <!-- Add New Payment Method -->
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 cursor-pointer hover:border-primary-500 transition-colors">
+                                    <div class="flex items-center justify-center">
+                                        <i class="fas fa-plus-circle text-primary-600 mr-2"></i>
+                                        <span class="text-primary-600 font-medium">Add a new payment method</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Credit Card Form (Hidden by default) -->
+                            <div class="mt-6 border-t border-gray-200 pt-6">
+                                <h3 class="font-semibold mb-4">Credit Card Details</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Card Number</label>
+                                        <input type="text" placeholder="1234 5678 9012 3456" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-gray-700 mb-2">Expiration Date</label>
+                                            <input type="text" placeholder="MM/YY" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-700 mb-2">Security Code</label>
+                                            <input type="text" placeholder="CVV" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Name on Card</label>
+                                        <input type="text" placeholder="John Doe" class="form-input w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden sticky top-24">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xl font-semibold">Order Summary</h2>
+                        </div>
+                        <div class="p-6">
+                            <!-- Order Items -->
+                            <div class="space-y-4 mb-6">
+                                <!-- Item 1 -->
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/d5ee5b4a29e6cd14ee4f52ae0b4ed05b~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=xrxHPF2Z9pYCYuBKzigaGtrs%2Fxc%3D" alt="Front Grille" class="product-image w-full h-full object-cover">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-sm">Front Grille Assembly</h3>
+                                        <p class="text-gray-500 text-xs">For Ford Explorer 2020-2022</p>
+                                        <div class="flex justify-between items-center mt-1">
+                                            <span class="text-gray-700 text-sm">Qty: 1</span>
+                                            <span class="font-semibold">$149.99</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Item 2 -->
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                        <img src="https://p26-doubao-search-sign.byteimg.com/isp-i18n-media/image/6fe14b393f9999e6f5e85e02b87fa925~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=1ZHfpOakIaFp23rKOU%2B%2Fj6Hv0DE%3D" alt="Headlights" class="product-image w-full h-full object-cover">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-sm">LED Headlights</h3>
+                                        <p class="text-gray-500 text-xs">For Ford Explorer 2020-2022</p>
+                                        <div class="flex justify-between items-center mt-1">
+                                            <span class="text-gray-700 text-sm">Qty: 1</span>
+                                            <span class="font-semibold">$299.99</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Item 3 -->
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden mr-4">
+                                        <img src="https://p11-doubao-search-sign.byteimg.com/labis/f31b9b3e75b93ada85d5a6d6902ea687~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=tv4e061SlqyHwdDwm%2FhQ8GvEUVg%3D" alt="Emblem" class="product-image w-full h-full object-cover">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-medium text-sm">Ford Emblem</h3>
+                                        <p class="text-gray-500 text-xs">For Ford Explorer 2020-2022</p>
+                                        <div class="flex justify-between items-center mt-1">
+                                            <span class="text-gray-700 text-sm">Qty: 1</span>
+                                            <span class="font-semibold">$39.99</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Discount Code -->
+                            <div class="mb-6">
+                                <div class="flex">
+                                    <input type="text" placeholder="Discount code" class="form-input flex-1 border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none">
+                                    <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-r-md transition-colors">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Order Summary -->
+                            <div class="space-y-3 mb-6">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Subtotal</span>
+                                    <span class="font-semibold">$489.97</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Shipping</span>
+                                    <span class="font-semibold">$12.99</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Taxes</span>
+                                    <span class="font-semibold">$36.75</span>
+                                </div>
+                                <div class="flex justify-between text-green-600 font-semibold">
+                                    <span>Discount</span>
+                                    <span>-$25.00</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Total -->
+                            <div class="border-t border-gray-200 pt-4 mb-6">
+                                <div class="flex justify-between text-xl font-bold">
+                                    <span>Total</span>
+                                    <span>$514.71</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Terms and Conditions -->
+                            <div class="mb-6">
+                                <div class="flex items-start">
+                                    <input type="checkbox" id="terms" class="mt-1 mr-2">
+                                    <label for="terms" class="text-gray-700 text-sm">I agree to the <a href="terms.html" class="text-primary-600 hover:underline" target="_blank" rel="noopener">Terms of Service</a> and <a href="privacy.html" class="text-primary-600 hover:underline" target="_blank" rel="noopener">Privacy Policy</a></label>
+                                </div>
+                            </div>
+                            
+                            <!-- Place Order Button -->
+                            <button class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-md font-semibold transition-colors flex items-center justify-center">
+                                <i class="fas fa-lock mr-2"></i>
+                                Place Order
+                            </button>
+                            
+                            <!-- Secure Checkout -->
+                            <div class="mt-4 flex justify-center items-center text-gray-500 text-sm">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                <span>Secure checkout powered by Stripe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chat Assistant -->
+    <div class="fixed bottom-6 right-6 w-80 bg-white rounded-xl shadow-2xl overflow-hidden collapsed z-50" id="ai-chat-container">
+        <!-- Chat Header -->
+        <div class="bg-primary-600 text-white p-4 flex justify-between items-center cursor-pointer" id="ai-chat-header">
+            <div class="flex items-center">
+                <i class="fas fa-robot mr-2"></i>
+                <span class="font-semibold">AI Parts Assistant</span>
+            </div>
+            <button id="ai-chat-toggle">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </div>
+        
+        <!-- Chat Messages -->
+        <div class="h-80 overflow-y-auto p-4" id="ai-chat-messages">
+            <div class="flex mb-4">
+                <div class="bg-primary-100 text-primary-800 rounded-lg py-2 px-4 max-w-[80%]">
+                    <p>Hello! I'm your AI Parts Assistant. How can I help you with your order today?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Input -->
+        <div class="border-t p-4">
+            <div class="flex">
+                <input type="text" id="ai-chat-input" placeholder="Ask about your order..." class="flex-1 border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <button id="ai-chat-send" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-r-md transition-colors">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <a href="index.html">
+                            <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-10">
+                        </a>
+                        <span class="text-xl font-bold">AutoParts Global</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Your trusted supplier of Ford and Lincoln parts. High quality, competitive prices, and fast shipping worldwide.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Products</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Product Categories -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Product Categories</h3>
+                    <ul class="space-y-3">
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Engine Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Body Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Electrical</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Suspension</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Brakes</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">All Categories</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates, promotions, and new products.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 rounded-l-md focus:outline-none text-gray-800">
+                            <button type="submit" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-r-md transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <p class="text-gray-400 text-sm">By subscribing, you agree to our <a href="privacy.html" class="text-primary-400 hover:text-white underline">Privacy Policy</a> and consent to receive updates from our company.</p>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2026 AutoParts Global. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="terms.html" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                        <a href="privacy.html" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                        <a href="shipping.html" class="text-gray-400 hover:text-white text-sm transition-colors">Shipping &amp; Returns</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('-translate-x-full')) {
+                mobileMenu.classList.remove('-translate-x-full');
+                mobileMenu.classList.add('translate-x-0');
+            } else {
+                mobileMenu.classList.remove('translate-x-0');
+                mobileMenu.classList.add('-translate-x-full');
+            }
+        });
+        
+        // Payment Method Selection
+        const paymentMethodCards = document.querySelectorAll('.payment-method-card');
+        
+        paymentMethodCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove selected class from all cards
+                paymentMethodCards.forEach(c => {
+                    c.classList.remove('selected');
+                    c.classList.add('border-gray-200');
+                });
+                
+                // Add selected class to clicked card
+                card.classList.add('selected');
+                card.classList.remove('border-gray-200');
+                
+                // Check the corresponding radio button
+                const radio = card.querySelector('input[type="radio"]');
+                radio.checked = true;
+            });
+        });
+        
+        // AI Chat Assistant
+        const aiChatContainer = document.getElementById('ai-chat-container');
+        const aiChatHeader = document.getElementById('ai-chat-header');
+        const aiChatToggle = document.getElementById('ai-chat-toggle');
+        const aiChatMessages = document.getElementById('ai-chat-messages');
+        const aiChatInput = document.getElementById('ai-chat-input');
+        const aiChatSend = document.getElementById('ai-chat-send');
+        
+        aiChatHeader.addEventListener('click', () => {
+            if (aiChatContainer.classList.contains('collapsed')) {
+                aiChatContainer.classList.remove('collapsed');
+                aiChatContainer.classList.add('expanded');
+                aiChatToggle.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            } else {
+                aiChatContainer.classList.remove('expanded');
+                aiChatContainer.classList.add('collapsed');
+                aiChatToggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            }
+        });
+        
+        function sendMessage() {
+            const message = aiChatInput.value.trim();
+            if (message) {
+                // Add user message
+                aiChatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-primary-600 text-white rounded-lg py-2 px-4 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Clear input
+                aiChatInput.value = '';
+                
+                // Scroll to bottom
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    let response = '';
+                    
+                    if (message.toLowerCase().includes('shipping')) {
+                        response = 'We offer several shipping options: Standard (5-7 business days), Expedited (2-3 business days), and Express (1 business day). Free standard shipping is available on orders over $99.';
+                    } else if (message.toLowerCase().includes('payment')) {
+                        response = 'We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, and Apple Pay. All transactions are secured by Stripe.';
+                    } else if (message.toLowerCase().includes('return') || message.toLowerCase().includes('refund')) {
+                        response = 'We offer a 30-day return policy on most items. If you need to return a product, please contact our customer service team for assistance.';
+                    } else {
+                        response = 'I\'d be happy to help you with your checkout process. Is there something specific about your order you\'d like to know?';
+                    }
+                    
+                    aiChatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="bg-primary-100 text-primary-800 rounded-lg py-2 px-4 max-w-[80%]">
+                                <p>${response}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Scroll to bottom
+                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        aiChatSend.addEventListener('click', sendMessage);
+        
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

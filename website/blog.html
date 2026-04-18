@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | AutoParts Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: { 500: '#0066ff', 600: '#0052cc', 700: '#003d99' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center py-4 gap-4">
+            <div class="flex items-center space-x-2">
+                <a href="index.html"><img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-12"></a>
+                <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+            </div>
+            <nav class="flex flex-wrap gap-6 text-sm md:text-base">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600">Home</a>
+                <a href="shop.html" class="text-gray-600 hover:text-primary-600">Products</a>
+                <a href="index.html#about" class="text-gray-600 hover:text-primary-600">About</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-primary-600">Contact</a>
+                <a href="blog.html" class="text-primary-600 font-semibold">Blog</a>
+            </nav>
+            <a href="cart.html" class="text-gray-600 relative"><i class="fas fa-shopping-cart text-2xl"></i>
+                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+            </a>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-16">
+        <div class="container mx-auto px-4 text-center max-w-3xl">
+            <h1 class="text-4xl font-bold mb-4">Ford &amp; Lincoln parts insights</h1>
+            <p class="text-lg opacity-90">Maintenance tips, buying guides, and product news for professional shops and enthusiasts.</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <nav class="text-sm text-gray-500 mb-12">
+                <a href="index.html" class="hover:text-primary-600">Home</a> / <span class="text-gray-800">Blog</span>
+            </nav>
+
+            <p class="text-sm text-gray-500 mb-8">On this page: <a class="text-primary-600 hover:underline" href="#post-oem">OEM vs aftermarket</a> ·
+            <a class="text-primary-600 hover:underline" href="#post-brakes">Brake service</a> ·
+            <a class="text-primary-600 hover:underline" href="#post-vin">VIN basics</a></p>
+
+            <article id="post-oem" class="bg-white rounded-xl shadow-md p-8 mb-12 scroll-mt-24">
+                <p class="text-sm text-primary-600 font-medium mb-2">March 28, 2026 · Buying guide</p>
+                <h2 class="text-2xl font-bold mb-4">OEM vs genuine vs aftermarket: what shops should know</h2>
+                <p class="text-gray-700 leading-relaxed mb-4"><strong>Genuine</strong> Ford and Lincoln parts are sold through authorized channels and carry the brand’s packaging. <strong>OEM</strong> (original equipment manufacturer) parts are built by the same suppliers that produced the factory components, often without the branded box—ideal when you want factory fit at a lower price.</p>
+                <p class="text-gray-700 leading-relaxed mb-4"><strong>Aftermarket</strong> parts vary widely in quality. Look for CAPA certification for body panels, and prefer brands with strong warranty support for drivetrain and brake components.</p>
+                <p class="text-gray-700 leading-relaxed">For collision or lease-return work, your customer may require genuine parts. For older fleet vehicles, OEM and quality aftermarket options often deliver the best total cost of ownership.</p>
+            </article>
+
+            <article id="post-brakes" class="bg-white rounded-xl shadow-md p-8 mb-12 scroll-mt-24">
+                <p class="text-sm text-primary-600 font-medium mb-2">March 10, 2026 · Maintenance</p>
+                <h2 class="text-2xl font-bold mb-4">Brake service intervals for F-150 and Explorer</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">Heavy towing and stop-and-go driving wear pads faster than highway mileage. Always measure rotor thickness and replace pads when they reach the manufacturer’s minimum—on many Ford trucks that’s around 3 mm remaining friction material.</p>
+                <p class="text-gray-700 leading-relaxed mb-4">When replacing pads, inspect caliper slides and hardware kits. For pulsation under braking, check rotor runout before installing new rotors.</p>
+                <p class="text-gray-700 leading-relaxed">Use DOT-approved fluid and follow the bleed schedule in the service manual for vehicles with electronic brake boost assist.</p>
+            </article>
+
+            <article id="post-vin" class="bg-white rounded-xl shadow-md p-8 scroll-mt-24">
+                <p class="text-sm text-primary-600 font-medium mb-2">February 2, 2026 · Technical</p>
+                <h2 class="text-2xl font-bold mb-4">Decoding the VIN for correct catalog lookups</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">The 17-character VIN encodes model year, plant, engine, and restraint system. Positions 4–8 describe the vehicle line and trim—critical when multiple grilles or headlamps exist within the same model year.</p>
+                <p class="text-gray-700 leading-relaxed mb-4">Always cross-check catalog results with the build date on the door jamb sticker when ordering body and electrical components that changed mid-year.</p>
+                <p class="text-gray-700 leading-relaxed">Our site search accepts VIN in the <a href="index.html#ai-part-finder" class="text-primary-600 hover:underline">AI Part Finder</a> to narrow compatible parts for your Ford or Lincoln.</p>
+            </article>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white pt-12 pb-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm"><a href="index.html" class="hover:text-white">Home</a> · <a href="shop.html" class="hover:text-white">Shop</a> · <a href="privacy.html" class="hover:text-white">Privacy</a></p>
+            <p class="text-gray-500 text-xs mt-4">© 2026 AutoParts Global</p>
+        </div>
+    </footer>
+</body>
+</html>

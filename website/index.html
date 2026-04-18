@@ -1,0 +1,949 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoParts Global | Ford &amp; Lincoln Parts Supplier</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f0ff',
+                            100: '#b3d1ff',
+                            200: '#80b3ff',
+                            300: '#4d94ff',
+                            400: '#1a75ff',
+                            500: '#0066ff',
+                            600: '#0052cc',
+                            700: '#003d99',
+                            800: '#002966',
+                            900: '#001433',
+                        },
+                        secondary: {
+                            50: '#f0f0f0',
+                            100: '#d1d1d1',
+                            200: '#b3b3b3',
+                            300: '#949494',
+                            400: '#757575',
+                            500: '#666666',
+                            600: '#525252',
+                            700: '#3d3d3d',
+                            800: '#292929',
+                            900: '#141414',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .category-item {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        .category-item:hover {
+            background-color: #0066ff;
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .search-animation {
+            transition: width 0.3s ease;
+        }
+        
+        .search-animation:focus {
+            width: 300px;
+        }
+        
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .ai-chat-container {
+            transition: transform 0.3s ease;
+        }
+        
+        .ai-chat-container.expanded {
+            transform: translateY(0);
+        }
+        
+        .ai-chat-container.collapsed {
+            transform: translateY(calc(100% - 60px));
+        }
+        
+        /* Skeleton loading effect */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0066ff;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0052cc;
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.hidden {
+            transform: translateX(-100%);
+        }
+        
+        /* Product image zoom effect */
+        .product-image-container {
+            overflow: hidden;
+        }
+        
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+        
+        .product-image-container:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2">
+                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-12">
+                    <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-primary-600 font-semibold hover:text-primary-800 transition-colors">Home</a>
+                    <a href="shop.html" class="text-gray-600 hover:text-primary-600 transition-colors">Products</a>
+                    <a href="#about" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+                </nav>
+                
+                <!-- Search, User, Cart Icons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search parts..." class="search-animation pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent w-40">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    
+                    <!-- User Account -->
+                    <div class="relative group">
+                        <button class="text-gray-600 hover:text-primary-600 transition-colors">
+                            <i class="fas fa-user-circle text-2xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Sign In</a>
+                            <a href="register.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Register</a>
+                            <a href="account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">My Account</a>
+                            <a href="orders.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Orders</a>
+                            <a href="wishlist.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Wishlist</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative text-gray-600 hover:text-primary-600 transition-colors" aria-label="Shopping cart">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </a>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden text-gray-600 hover:text-primary-600 transition-colors" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-x-full transition-transform duration-300 ease-in-out" id="mobile-menu">
+            <div class="px-4 py-2">
+                <a href="index.html" class="block py-2 text-primary-600 font-semibold">Home</a>
+                <a href="shop.html" class="block py-2 text-gray-600">Products</a>
+                <a href="#about" class="block py-2 text-gray-600">About Us</a>
+                <a href="#contact" class="block py-2 text-gray-600">Contact</a>
+                <div class="relative mt-2">
+                    <input type="text" placeholder="Search parts..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with 3D Animation -->
+    <section class="relative h-[500px] overflow-hidden">
+        <canvas id="hero-canvas"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-900/80 to-primary-700/70"></div>
+        <div class="container mx-auto px-4 h-full flex items-center relative z-10">
+            <div class="max-w-2xl text-white">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Genuine Ford &amp; Lincoln Parts</h1>
+                <p class="text-xl mb-8">High-quality auto parts for your Ford and Lincoln vehicles. Fast shipping worldwide.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="shop.html" class="bg-white text-primary-600 hover:bg-gray-100 px-6 py-3 rounded-full font-semibold transition-colors">
+                        Browse Products
+                    </a>
+                    <a href="#contact" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-full font-semibold transition-colors">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Featured Categories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Category 1 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/8e1d60092d1d2bf7bb64cd45841b1aba~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=Ml9Hr3Hr%2FXyj9vU9m9Qlm1kpD9s%3D" alt="Engine Parts" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Engine Parts</h3>
+                        <p class="text-gray-600 mb-4">High-performance engine components for optimal performance.</p>
+                        <a href="shop.html" class="text-primary-600 hover:text-primary-800 font-medium flex items-center">
+                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Category 2 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/b8047fb807fc4d1c21cbed8e4f1edd0d~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=qtSr3ATAmvFAt9scyFSJqrTM0DY%3D" alt="Body Parts" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Body Parts</h3>
+                        <p class="text-gray-600 mb-4">Genuine body parts to maintain your vehicle's appearance.</p>
+                        <a href="shop.html" class="text-primary-600 hover:text-primary-800 font-medium flex items-center">
+                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Category 3 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/isp-i18n-media/image/6fe14b393f9999e6f5e85e02b87fa925~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=1ZHfpOakIaFp23rKOU%2B%2Fj6Hv0DE%3D" alt="Lighting" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Lighting</h3>
+                        <p class="text-gray-600 mb-4">Headlights, taillights, and other lighting components.</p>
+                        <a href="shop.html" class="text-primary-600 hover:text-primary-800 font-medium flex items-center">
+                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Category 4 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/labis/f31b9b3e75b93ada85d5a6d6902ea687~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=tv4e061SlqyHwdDwm%2FhQ8GvEUVg%3D" alt="Emblems &amp; Decals" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Emblems &amp; Decals</h3>
+                        <p class="text-gray-600 mb-4">Genuine badges and emblems for your Ford or Lincoln.</p>
+                        <a href="shop.html" class="text-primary-600 hover:text-primary-800 font-medium flex items-center">
+                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop catalog (full store on shop.html) -->
+    <section id="products" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="container mx-auto px-4 text-center max-w-2xl">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Parts catalog</h2>
+            <p class="text-gray-600 mb-8">Browse the full Ford & Lincoln catalog with advanced search, filters, and sorting on a dedicated store page — keep the homepage focused on discovery and support.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="shop.html" class="inline-flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white font-semibold px-8 py-3 rounded-full transition-colors shadow-lg shadow-primary-600/20">
+                    <i class="fas fa-store mr-2"></i> Open parts store
+                </a>
+                <a href="search-results.html" class="inline-flex items-center justify-center border border-gray-300 hover:bg-white text-gray-800 font-medium px-6 py-3 rounded-full transition-colors bg-white">
+                    <i class="fas fa-filter mr-2 text-primary-600"></i> Filtered search
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- AI-Powered Part Finder -->
+    <section id="ai-part-finder" class="py-16 bg-gradient-to-r from-primary-800 to-primary-600 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">AI-Powered Part Finder</h2>
+                <p class="text-lg opacity-90">Not sure which part you need? Our AI system can help you find the right parts for your vehicle.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-xl p-8 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Vehicle Make</label>
+                        <select id="ai-make" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="">Select Make</option>
+                            <option value="ford">Ford</option>
+                            <option value="lincoln">Lincoln</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Model</label>
+                        <select id="ai-model" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="">Select Model</option>
+                            <option value="f150">F-150</option>
+                            <option value="mustang">Mustang</option>
+                            <option value="explorer">Explorer</option>
+                            <option value="escape">Escape</option>
+                            <option value="navigator">Navigator</option>
+                            <option value="continental">Continental</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Year</label>
+                        <select id="ai-year" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="">Select Year</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">VIN (Optional)</label>
+                        <input type="text" id="ai-vin" placeholder="Enter VIN for precise matching" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2">Describe the part you need</label>
+                    <textarea id="ai-description" rows="3" placeholder="Example: My car is making a squealing noise when I brake. I need new brake pads." class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                </div>
+                
+                <div class="flex justify-center">
+                    <button id="ai-find-btn" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-md font-semibold transition-colors">
+                        <i class="fas fa-robot mr-2"></i> Find Parts
+                    </button>
+                </div>
+                
+                <!-- AI Results (Initially Hidden) -->
+                <div id="ai-results" class="mt-8 hidden">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">Recommended Parts</h3>
+                    <div class="border-t border-gray-200 pt-4">
+                        <div class="flex items-start mb-4 pb-4 border-b border-gray-100">
+                            <div class="bg-green-100 text-green-800 p-2 rounded-full mr-4">
+                                <i class="fas fa-check-circle text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Brake Pad Set - Front</h4>
+                                <p class="text-gray-600">Based on your description of squealing noise when braking, these premium brake pads are recommended for your 2020 Ford F-150.</p>
+                                <div class="mt-2">
+                                    <span class="text-primary-600 font-bold">$89.99</span>
+                                    <button class="ml-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-1 rounded text-sm transition-colors">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-4 pb-4 border-b border-gray-100">
+                            <div class="bg-blue-100 text-blue-800 p-2 rounded-full mr-4">
+                                <i class="fas fa-info-circle text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Brake Rotors - Front</h4>
+                                <p class="text-gray-600">It's recommended to replace rotors when installing new brake pads for optimal performance and longevity.</p>
+                                <div class="mt-2">
+                                    <span class="text-primary-600 font-bold">$129.99</span>
+                                    <button class="ml-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-1 rounded text-sm transition-colors">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-yellow-100 text-yellow-800 p-2 rounded-full mr-4">
+                                <i class="fas fa-lightbulb text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Brake Fluid</h4>
+                                <p class="text-gray-600">For a complete brake service, consider replacing the brake fluid as well. Recommended every 30,000 miles.</p>
+                                <div class="mt-2">
+                                    <span class="text-primary-600 font-bold">$19.99</span>
+                                    <button class="ml-4 bg-primary-600 hover:bg-primary-700 text-white px-4 py-1 rounded text-sm transition-colors">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">About AutoParts Global</h2>
+                    <p class="text-gray-600 mb-4">AutoParts Global is a leading supplier of genuine, OEM, and aftermarket parts for Ford and Lincoln vehicles. With over 15 years of experience in the automotive industry, we have established ourselves as a trusted partner for customers worldwide.</p>
+                    <p class="text-gray-600 mb-4">We specialize in providing high-quality parts for all Ford and Lincoln models, including the latest releases and hard-to-find components for older vehicles. Our extensive inventory ensures that we can fulfill even the most specific part requests.</p>
+                    <p class="text-gray-600 mb-6">Our commitment to customer satisfaction, competitive pricing, and fast shipping has made us the preferred choice for auto repair shops, dealerships, and individual vehicle owners around the globe.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <div class="bg-primary-100 text-primary-600 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>15+ Years Experience</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-primary-100 text-primary-600 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>100,000+ Parts in Stock</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-primary-100 text-primary-600 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Worldwide Shipping</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-primary-100 text-primary-600 p-2 rounded-full mr-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Expert Customer Support</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/db1719eabf6c4ae1b8f68c6b8b6e32d9~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=XleyBPPD8HFch6oU611Pexxpgis%3D" alt="Auto Parts" class="rounded-xl shadow-lg w-full">
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">15+</div>
+                    <p class="text-gray-600">Years of Experience</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">50K+</div>
+                    <p class="text-gray-600">Happy Customers</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">100K+</div>
+                    <p class="text-gray-600">Parts in Stock</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">120+</div>
+                    <p class="text-gray-600">Countries Shipped To</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Contact Us</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-xl font-semibold mb-6">Send us a Message</h3>
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-gray-700 mb-2">First Name</label>
+                                <input type="text" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Last Name</label>
+                                <input type="text" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Phone</label>
+                                <input type="tel" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Subject</label>
+                            <input type="text" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Message</label>
+                            <textarea rows="4" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                        </div>
+                        <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-md font-semibold transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+                        <h3 class="text-xl font-semibold mb-6">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-primary-100 text-primary-600 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Address</h4>
+                                    <p class="text-gray-600">123 Auto Parts Street, Industrial Park<br>Detroit, Michigan 48201<br>United States</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-primary-100 text-primary-600 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Phone</h4>
+                                    <p class="text-gray-600">+1 (800) 123-4567<br>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-primary-100 text-primary-600 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">info@autopartsglobal.com<br>support@autopartsglobal.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Live Chat -->
+                    <div class="bg-white rounded-xl shadow-md p-8">
+                        <h3 class="text-xl font-semibold mb-6">Live Chat Support</h3>
+                        <p class="text-gray-600 mb-6">Need immediate assistance? Our customer support team is available to chat 24/7.</p>
+                        <button class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-md font-semibold transition-colors flex items-center justify-center">
+                            <i class="fas fa-comments mr-2"></i> Start Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <a href="index.html"><img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-10"></a>
+                        <span class="text-xl font-bold">AutoParts Global</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Your trusted supplier of Ford and Lincoln parts. High quality, competitive prices, and fast shipping worldwide.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Products</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Product Categories -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Product Categories</h3>
+                    <ul class="space-y-3">
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Engine Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Body Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Electrical</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Suspension</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">Brakes</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white transition-colors">All Categories</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates, promotions, and new products.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 rounded-l-md focus:outline-none text-gray-800">
+                            <button type="submit" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-r-md transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <p class="text-gray-400 text-sm">By subscribing, you agree to our <a href="privacy.html" class="text-primary-400 hover:text-white underline">Privacy Policy</a> and consent to receive updates from our company.</p>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2026 AutoParts Global. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="terms.html" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                        <a href="privacy.html" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                        <a href="shipping.html" class="text-gray-400 hover:text-white text-sm transition-colors">Shipping &amp; Returns</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Chat Assistant -->
+    <div class="ai-chat-container fixed bottom-6 right-6 w-80 bg-white rounded-xl shadow-2xl overflow-hidden collapsed z-50" id="ai-chat-container">
+        <!-- Chat Header -->
+        <div class="bg-primary-600 text-white p-4 flex justify-between items-center cursor-pointer" id="ai-chat-header">
+            <div class="flex items-center">
+                <i class="fas fa-robot mr-2"></i>
+                <span class="font-semibold">AI Parts Assistant</span>
+            </div>
+            <button id="ai-chat-toggle">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </div>
+        
+        <!-- Chat Messages -->
+        <div class="h-80 overflow-y-auto p-4" id="ai-chat-messages">
+            <div class="flex mb-4">
+                <div class="bg-primary-100 text-primary-800 rounded-lg py-2 px-4 max-w-[80%]">
+                    <p>Hello! I'm your AI Parts Assistant. How can I help you find the right parts for your Ford or Lincoln vehicle today?</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Input -->
+        <div class="border-t p-4">
+            <div class="flex">
+                <input type="text" id="ai-chat-input" placeholder="Ask about parts..." class="flex-1 border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <button id="ai-chat-send" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-r-md transition-colors">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('-translate-x-full')) {
+                mobileMenu.classList.remove('-translate-x-full');
+                mobileMenu.classList.add('translate-x-0');
+            } else {
+                mobileMenu.classList.remove('translate-x-0');
+                mobileMenu.classList.add('-translate-x-full');
+            }
+        });
+        
+        // AI Chat Assistant
+        const aiChatContainer = document.getElementById('ai-chat-container');
+        const aiChatHeader = document.getElementById('ai-chat-header');
+        const aiChatToggle = document.getElementById('ai-chat-toggle');
+        const aiChatMessages = document.getElementById('ai-chat-messages');
+        const aiChatInput = document.getElementById('ai-chat-input');
+        const aiChatSend = document.getElementById('ai-chat-send');
+        
+        aiChatHeader.addEventListener('click', () => {
+            if (aiChatContainer.classList.contains('collapsed')) {
+                aiChatContainer.classList.remove('collapsed');
+                aiChatContainer.classList.add('expanded');
+                aiChatToggle.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            } else {
+                aiChatContainer.classList.remove('expanded');
+                aiChatContainer.classList.add('collapsed');
+                aiChatToggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            }
+        });
+        
+        function sendMessage() {
+            const message = aiChatInput.value.trim();
+            if (message) {
+                // Add user message
+                aiChatMessages.innerHTML += `
+                    <div class="flex justify-end mb-4">
+                        <div class="bg-primary-600 text-white rounded-lg py-2 px-4 max-w-[80%]">
+                            <p>${message}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Clear input
+                aiChatInput.value = '';
+                
+                // Scroll to bottom
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    let response = '';
+                    
+                    if (message.toLowerCase().includes('brake')) {
+                        response = 'For brake parts, I recommend checking our brake pads and rotors collection. Which Ford or Lincoln model do you have?';
+                    } else if (message.toLowerCase().includes('engine')) {
+                        response = 'We have a wide selection of engine parts. Could you specify which engine component you need and your vehicle year and model?';
+                    } else if (message.toLowerCase().includes('model') || message.toLowerCase().includes('year')) {
+                        response = 'Great! With that information, I can help you find the exact parts that fit your vehicle. What specific part are you looking for?';
+                    } else {
+                        response = 'I\'d be happy to help you find the right parts. Could you please provide your vehicle make, model, and year?';
+                    }
+                    
+                    aiChatMessages.innerHTML += `
+                        <div class="flex mb-4">
+                            <div class="bg-primary-100 text-primary-800 rounded-lg py-2 px-4 max-w-[80%]">
+                                <p>${response}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Scroll to bottom
+                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        aiChatSend.addEventListener('click', sendMessage);
+        
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // AI Part Finder
+        const aiFindBtn = document.getElementById('ai-find-btn');
+        const aiResults = document.getElementById('ai-results');
+        
+        aiFindBtn.addEventListener('click', () => {
+            const make = document.getElementById('ai-make').value;
+            const model = document.getElementById('ai-model').value;
+            const year = document.getElementById('ai-year').value;
+            const description = document.getElementById('ai-description').value;
+            
+            if (!make || !model || !year || !description) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Show loading state
+            aiFindBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Analyzing...';
+            aiFindBtn.disabled = true;
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                // Show results
+                aiResults.classList.remove('hidden');
+                
+                // Reset button
+                aiFindBtn.innerHTML = '<i class="fas fa-robot mr-2"></i> Find Parts';
+                aiFindBtn.disabled = false;
+                
+                // Scroll to results
+                aiResults.scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        });
+        
+        // 3D Hero Animation with Three.js
+        function initThreeJS() {
+            const canvas = document.getElementById('hero-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 500, 0.1, 1000);
+            
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                alpha: true,
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, 500);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1500;
+            
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 5;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.005,
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Add car parts model (simplified as a cube for demo)
+            const geometry = new THREE.BoxGeometry(1, 0.5, 0.5);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x0066ff,
+                wireframe: true
+            });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            
+            camera.position.z = 2;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.y += 0.001;
+                cube.rotation.y += 0.005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / 500;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, 500);
+            });
+        }
+        
+        // Initialize Three.js when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+        });
+    </script>
+
+</body></html>

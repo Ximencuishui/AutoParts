@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | AutoParts Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f0ff', 100: '#b3d1ff', 200: '#80b3ff', 300: '#4d94ff', 400: '#1a75ff',
+                            500: '#0066ff', 600: '#0052cc', 700: '#003d99', 800: '#002966', 900: '#001433',
+                        },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #0066ff; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <a href="index.html">
+                        <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-12">
+                    </a>
+                    <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="shop.html" class="text-gray-600 hover:text-primary-600 transition-colors">Products</a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative group hidden sm:block">
+                        <input type="text" placeholder="Search parts..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 w-40 md:w-56">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="relative group">
+                        <button class="text-gray-600 hover:text-primary-600 transition-colors" type="button" aria-label="Account">
+                            <i class="fas fa-user-circle text-2xl"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Sign In</a>
+                            <a href="register.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Register</a>
+                            <a href="account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">My Account</a>
+                            <a href="orders.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Orders</a>
+                            <a href="wishlist.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-500 hover:text-white">Wishlist</a>
+                        </div>
+                    </div>
+                    <a href="cart.html" class="text-primary-600 hover:text-primary-800 transition-colors relative" aria-label="Cart">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-500 hover:text-primary-600">Home</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <span class="text-gray-700 font-medium">Shopping Cart</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row gap-4">
+                        <a href="product-detail.html" class="shrink-0 w-full sm:w-32 h-32 rounded-lg overflow-hidden">
+                            <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/d5ee5b4a29e6cd14ee4f52ae0b4ed05b~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=xrxHPF2Z9pYCYuBKzigaGtrs%2Fxc%3D" alt="Front Grille Assembly" class="w-full h-full object-cover">
+                        </a>
+                        <div class="flex-1">
+                            <a href="product-detail.html" class="text-lg font-semibold text-gray-900 hover:text-primary-600">Front Grille Assembly</a>
+                            <p class="text-sm text-gray-500">Ford Explorer 2020–2022 · Genuine Ford</p>
+                            <div class="mt-4 flex flex-wrap items-center gap-4">
+                                <label class="text-sm text-gray-600">Qty</label>
+                                <input type="number" value="1" min="1" class="w-20 border border-gray-300 rounded-md px-2 py-1">
+                                <button type="button" class="text-sm text-red-600 hover:underline">Remove</button>
+                            </div>
+                        </div>
+                        <div class="text-right font-bold text-primary-600 text-xl">$149.99</div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row gap-4">
+                        <a href="product-detail.html" class="shrink-0 w-full sm:w-32 h-32 rounded-lg overflow-hidden">
+                            <img src="https://p26-doubao-search-sign.byteimg.com/labis/981935be9996e6b7f50786b03a002cf6~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=bzSmrgRqS2PLi6lYGU%2FwWd%2FUsQY%3D" alt="Front Bumper Lip" class="w-full h-full object-cover">
+                        </a>
+                        <div class="flex-1">
+                            <a href="product-detail.html" class="text-lg font-semibold text-gray-900 hover:text-primary-600">Front Bumper Lip</a>
+                            <p class="text-sm text-gray-500">Lincoln MKZ 2017–2020 · OEM</p>
+                            <div class="mt-4 flex flex-wrap items-center gap-4">
+                                <label class="text-sm text-gray-600">Qty</label>
+                                <input type="number" value="2" min="1" class="w-20 border border-gray-300 rounded-md px-2 py-1">
+                                <button type="button" class="text-sm text-red-600 hover:underline">Remove</button>
+                            </div>
+                        </div>
+                        <div class="text-right font-bold text-primary-600 text-xl">$179.98</div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row gap-4">
+                        <a href="product-detail.html" class="shrink-0 w-full sm:w-32 h-32 rounded-lg overflow-hidden">
+                            <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/869926994296307762~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=d0jR2E3YzvFJGZkAup4hcJvx%2BSI%3D" alt="Camshaft" class="w-full h-full object-cover">
+                        </a>
+                        <div class="flex-1">
+                            <a href="product-detail.html" class="text-lg font-semibold text-gray-900 hover:text-primary-600">Camshaft</a>
+                            <p class="text-sm text-gray-500">Ford F-150 2018–2022 · Aftermarket</p>
+                            <div class="mt-4 flex flex-wrap items-center gap-4">
+                                <label class="text-sm text-gray-600">Qty</label>
+                                <input type="number" value="1" min="1" class="w-20 border border-gray-300 rounded-md px-2 py-1">
+                                <button type="button" class="text-sm text-red-600 hover:underline">Remove</button>
+                            </div>
+                        </div>
+                        <div class="text-right font-bold text-primary-600 text-xl">$249.99</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <a href="shop.html" class="text-primary-600 hover:text-primary-800 font-medium"><i class="fas fa-arrow-left mr-2"></i>Continue shopping</a>
+                        <button type="button" class="text-gray-600 hover:text-gray-900">Clear cart</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="bg-white rounded-xl shadow-md p-6 sticky top-24">
+                        <h2 class="text-xl font-bold mb-4">Order summary</h2>
+                        <div class="space-y-2 text-gray-600 text-sm">
+                            <div class="flex justify-between"><span>Subtotal</span><span>$579.96</span></div>
+                            <div class="flex justify-between"><span>Shipping</span><span>$12.00</span></div>
+                            <div class="flex justify-between"><span>Estimated tax</span><span>$46.40</span></div>
+                        </div>
+                        <div class="border-t border-gray-200 my-4 pt-4 flex justify-between text-lg font-bold">
+                            <span>Total</span>
+                            <span class="text-primary-600">$638.36</span>
+                        </div>
+                        <a href="checkout.html" class="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-md transition-colors">Proceed to checkout</a>
+                        <p class="text-xs text-gray-500 mt-4">Tax and shipping are estimates for this prototype. Final amounts are shown at checkout.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <a href="index.html"><img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-10"></a>
+                        <span class="text-xl font-bold">AutoParts Global</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Your trusted supplier of Ford and Lincoln parts.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Products</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Product Categories</h3>
+                    <ul class="space-y-3">
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Engine Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Body Parts</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Electrical</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Suspension</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Brakes</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">All Categories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Subscribe for updates and promotions.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="flex-1 px-4 py-2 rounded-l-md text-gray-800">
+                            <button type="submit" class="bg-primary-600 hover:bg-primary-700 px-4 py-2 rounded-r-md"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                    <p class="text-gray-400 text-sm">By subscribing, you agree to our <a href="privacy.html" class="underline hover:text-white">Privacy Policy</a>.</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2026 AutoParts Global. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="terms.html" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="privacy.html" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="shipping.html" class="text-gray-400 hover:text-white text-sm">Shipping &amp; Returns</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

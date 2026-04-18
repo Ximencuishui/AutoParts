@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History | AutoParts Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e6f0ff', 100: '#b3d1ff', 200: '#80b3ff', 300: '#4d94ff', 400: '#1a75ff',
+                            500: '#0066ff', 600: '#0052cc', 700: '#003d99', 800: '#002966', 900: '#001433',
+                        },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script src="js/auth.js"></script>
+    <script>
+        (function () {
+            if (!window.APGAuth || !APGAuth.isLoggedIn()) {
+                window.location.replace('login.html?next=orders.html');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <a href="index.html">
+                        <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-12">
+                    </a>
+                    <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-600">Home</a>
+                    <a href="shop.html" class="text-gray-600 hover:text-primary-600">Products</a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-primary-600">About Us</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-primary-600">Contact</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative group">
+                        <button type="button" class="text-primary-600" aria-label="Account"><i class="fas fa-user-circle text-2xl"></i></button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="account.html" class="block px-4 py-2 text-sm hover:bg-primary-500 hover:text-white">My Account</a>
+                            <a href="orders.html" class="block px-4 py-2 text-sm hover:bg-primary-500 hover:text-white">Orders</a>
+                            <a href="wishlist.html" class="block px-4 py-2 text-sm hover:bg-primary-500 hover:text-white">Wishlist</a>
+                        </div>
+                    </div>
+                    <a href="cart.html" class="text-gray-600 hover:text-primary-600 relative">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3 text-sm">
+            <a href="index.html" class="text-gray-500 hover:text-primary-600">Home</a>
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="text-gray-700 font-medium">Orders</span>
+        </div>
+    </div>
+
+    <section class="py-12">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <h1 class="text-3xl font-bold mb-2">Order history</h1>
+            <p class="text-gray-600 mb-8">Track shipments and download invoices for your recent purchases.</p>
+
+            <div class="space-y-6">
+                <article class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="bg-gray-50 px-6 py-4 flex flex-wrap justify-between gap-4 border-b border-gray-100">
+                        <div>
+                            <p class="text-sm text-gray-500">Order</p>
+                            <p class="font-semibold text-lg">#AP-2026-10428</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Date</p>
+                            <p class="font-medium">Apr 12, 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Status</p>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">Delivered</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total</p>
+                            <p class="font-bold text-primary-600">$638.36</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="divide-y divide-gray-100">
+                            <li class="py-3 flex justify-between items-center">
+                                <span>Front Grille Assembly × 1</span>
+                                <a href="product-detail.html" class="text-primary-600 text-sm hover:underline">View part</a>
+                            </li>
+                            <li class="py-3 flex justify-between items-center">
+                                <span>Front Bumper Lip × 2</span>
+                                <a href="product-detail.html" class="text-primary-600 text-sm hover:underline">View part</a>
+                            </li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-3">
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50">Download invoice</button>
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50">Track package</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="bg-gray-50 px-6 py-4 flex flex-wrap justify-between gap-4 border-b border-gray-100">
+                        <div>
+                            <p class="text-sm text-gray-500">Order</p>
+                            <p class="font-semibold text-lg">#AP-2026-10201</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Date</p>
+                            <p class="font-medium">Mar 3, 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Status</p>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">Delivered</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total</p>
+                            <p class="font-bold text-primary-600">$249.99</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="divide-y divide-gray-100">
+                            <li class="py-3 flex justify-between items-center">
+                                <span>Camshaft × 1</span>
+                                <a href="product-detail.html" class="text-primary-600 text-sm hover:underline">View part</a>
+                            </li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-3">
+                            <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50">Download invoice</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="bg-gray-50 px-6 py-4 flex flex-wrap justify-between gap-4 border-b border-gray-100">
+                        <div>
+                            <p class="text-sm text-gray-500">Order</p>
+                            <p class="font-semibold text-lg">#AP-2026-09876</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Date</p>
+                            <p class="font-medium">Feb 18, 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Status</p>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-amber-100 text-amber-800">Processing</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Total</p>
+                            <p class="font-bold text-primary-600">$89.99</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm">Brake pad set — warehouse allocation in progress. You will receive a tracking number when the order ships.</p>
+                        <div class="mt-4">
+                            <a href="account.html" class="text-primary-600 text-sm font-medium hover:underline">Manage in My Account</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white pt-12 pb-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm mb-4"><a href="index.html" class="hover:text-white">Home</a> · <a href="account.html" class="hover:text-white">Account</a> · <a href="privacy.html" class="hover:text-white">Privacy</a></p>
+            <p class="text-gray-500 text-xs">© 2026 AutoParts Global</p>
+        </div>
+    </footer>
+</body>
+</html>
