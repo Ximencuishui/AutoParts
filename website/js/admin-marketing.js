@@ -36,11 +36,31 @@
         };
     }
 
+    /** Demo / imported metrics for admin “效果列表” (extend via backend later). */
+    function defaultEffects() {
+        return {
+            rebate: [
+                { period: '2026-03', qualifiedOrders: 128, rebateIssued: 412.5, pendingSettlement: 89.2 },
+                { period: '2026-02', qualifiedOrders: 115, rebateIssued: 355.0, pendingSettlement: 0 }
+            ],
+            promo: [
+                { name: 'Summer parts sale', uses: 156, attributedRevenue: 42800, convRate: 3.2 },
+                { name: 'Spring fixed $ off', uses: 42, attributedRevenue: 9100, convRate: 1.8 },
+                { name: 'Newsletter tier', uses: 89, attributedRevenue: 15200, convRate: 2.4 }
+            ],
+            referral: [
+                { period: '2026-W15', linkClicks: 1240, signups: 86, firstOrders: 34, rewardsPaid: 680 },
+                { period: '2026-W14', linkClicks: 980, signups: 62, firstOrders: 28, rewardsPaid: 520 }
+            ]
+        };
+    }
+
     function defaults() {
         return {
             rebate: defaultRebate(),
             promotions: defaultPromotions(),
-            referral: defaultReferral()
+            referral: defaultReferral(),
+            effects: defaultEffects()
         };
     }
 
@@ -91,6 +111,13 @@
                     d.referral.minOrderToUnlock = Number(o.referral.minOrderToUnlock) || 0;
                     d.referral.attributionDays = Number(o.referral.attributionDays) || 30;
                 }
+                var defEf = defaultEffects();
+                var ef = o.effects && typeof o.effects === 'object' ? o.effects : {};
+                d.effects = {
+                    rebate: Array.isArray(ef.rebate) && ef.rebate.length ? ef.rebate : defEf.rebate,
+                    promo: Array.isArray(ef.promo) && ef.promo.length ? ef.promo : defEf.promo,
+                    referral: Array.isArray(ef.referral) && ef.referral.length ? ef.referral : defEf.referral
+                };
                 return d;
             }
             raw = localStorage.getItem(LEGACY_LOYALTY_KEY);
@@ -103,6 +130,7 @@
                     out.rebate.settlementDays = Number(leg.rebate.settlementDays) || 30;
                     out.rebate.minOrderForRebate = Number(leg.rebate.minOrderForRebate) || 0;
                 }
+                out.effects = defaultEffects();
                 return out;
             }
         } catch (e) {}
@@ -117,6 +145,7 @@
     global.APGAdminMarketing = {
         STORAGE_KEY: STORAGE_KEY,
         defaults: defaults,
+        defaultEffects: defaultEffects,
         load: load,
         save: save
     };

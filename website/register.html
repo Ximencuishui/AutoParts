@@ -40,6 +40,7 @@
                 <p class="text-gray-500 text-center text-sm mb-8">Shop faster, track orders, and save wishlists.</p>
 
                 <div id="reg-error" class="hidden mb-4 p-3 rounded-md bg-red-50 text-red-700 text-sm" role="alert"></div>
+                <div id="ref-banner" class="hidden mb-4 p-3 rounded-md bg-primary-50 text-primary-900 text-sm border border-primary-100" role="status"></div>
 
                 <form id="register-form" class="space-y-4">
                     <div class="grid grid-cols-2 gap-4">
@@ -97,6 +98,21 @@
     <script src="js/auth.js"></script>
     <script>
         (function () {
+            try {
+                var p = new URLSearchParams(location.search);
+                var ref = p.get('ref');
+                if (ref) sessionStorage.setItem('apg_signup_ref', ref);
+            } catch (e) {}
+            var rb = document.getElementById('ref-banner');
+            var sr = null;
+            try {
+                sr = sessionStorage.getItem('apg_signup_ref');
+            } catch (e) {}
+            if (rb && sr) {
+                rb.textContent = '您通过推广链接访问，推广码：' + sr + '（注册成功后可用于关联邀请关系，演示）。';
+                rb.classList.remove('hidden');
+            }
+
             var form = document.getElementById('register-form');
             var err = document.getElementById('reg-error');
 
