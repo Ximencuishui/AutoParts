@@ -62,14 +62,6 @@
         .sidebar.collapsed .sidebar-footer .sidebar-text {
             display: none;
         }
-        
-        .main-content {
-            transition: margin-left 0.3s ease;
-        }
-        
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 5rem;
-        }
     </style>
 </head>
 <body class="bg-gray-100" data-admin-page="dashboard">
@@ -83,7 +75,7 @@
     </script>
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside class="sidebar bg-gray-800 text-white w-64 flex flex-col">
+        <aside class="sidebar shrink-0 bg-gray-800 text-white w-64 flex flex-col">
             <!-- Logo -->
             <div class="sidebar-logo flex items-center justify-between p-4 border-b border-gray-700">
                 <div class="flex items-center space-x-2">
@@ -155,7 +147,7 @@
         </aside>
         
         <!-- Main Content -->
-        <main class="main-content flex-1 overflow-y-auto bg-gray-100 ml-64">
+        <main class="main-content flex-1 min-w-0 overflow-y-auto bg-gray-100">
             <!-- Header -->
             <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0">
                     <h1 class="text-2xl font-bold text-gray-800" data-i18n="header.dashboard">Dashboard</h1>

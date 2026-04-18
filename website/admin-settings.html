@@ -23,8 +23,6 @@
         .sidebar { transition: width 0.3s ease; }
         .sidebar.collapsed { width: 5rem; }
         .sidebar.collapsed .sidebar-text, .sidebar.collapsed .sidebar-logo .logo-text { display: none; }
-        .main-content { transition: margin-left 0.3s ease; }
-        .sidebar.collapsed ~ .main-content { margin-left: 5rem; }
     </style>
 </head>
 <body class="bg-gray-100" data-admin-page="settings">
@@ -37,7 +35,7 @@
         })();
     </script>
     <div class="flex h-screen overflow-hidden">
-        <aside class="sidebar bg-gray-800 text-white w-64 flex flex-col">
+        <aside class="sidebar shrink-0 bg-gray-800 text-white w-64 flex flex-col">
             <div class="sidebar-logo flex items-center justify-between p-4 border-b border-gray-700">
                 <div class="flex items-center space-x-2">
                     <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-8 bg-white p-1 rounded">
@@ -67,7 +65,7 @@
             </div>
         </aside>
 
-        <main class="main-content flex-1 overflow-y-auto bg-gray-100 ml-64">
+        <main class="main-content flex-1 min-w-0 overflow-y-auto bg-gray-100">
             <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
                 <h1 class="text-2xl font-bold text-gray-800" data-i18n="header.settings">Settings</h1>
                 <div class="flex items-center space-x-4">
