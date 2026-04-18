@@ -253,6 +253,7 @@
                         <div class="flex overflow-x-auto">
                             <button class="tab-button active px-8 py-4 font-semibold text-lg" data-tab="dashboard">Dashboard</button>
                             <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="orders">Orders</button>
+                            <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="tracking">Tracking</button>
                             <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="profile">Profile</button>
                             <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="wishlist">Wishlist</button>
                             <button class="tab-button px-8 py-4 font-semibold text-lg text-gray-500" data-tab="address">Address</button>
@@ -302,6 +303,14 @@
                                             <i class="fas fa-heart text-primary-600 mr-3"></i>
                                             <span>Wishlist</span>
                                         </a>
+                                        <a href="account.html?tab=tracking" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                                            <i class="fas fa-shipping-fast text-primary-600 mr-3"></i>
+                                            <span>Track shipment</span>
+                                        </a>
+                                        <a href="import-order.html" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                                            <i class="fas fa-file-import text-primary-600 mr-3"></i>
+                                            <span>Import order</span>
+                                        </a>
                                         <a href="account.html" class="flex items-center p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
                                             <i class="fas fa-map-marker-alt text-primary-600 mr-3"></i>
                                             <span>Addresses</span>
@@ -338,21 +347,21 @@
                                                 <td class="px-4 py-4">April 15, 2023</td>
                                                 <td class="px-4 py-4"><span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Processing</span></td>
                                                 <td class="px-4 py-4">$89.99</td>
-                                                <td class="px-4 py-4"><a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View</a></td>
+                                                <td class="px-4 py-4"><a href="account.html?tab=tracking&order=ORD-7845" class="text-primary-600 hover:text-primary-800 transition-colors">Track</a></td>
                                             </tr>
                                             <tr class="border-b border-gray-200">
                                                 <td class="px-4 py-4">#ORD-7723</td>
                                                 <td class="px-4 py-4">April 10, 2023</td>
                                                 <td class="px-4 py-4"><span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Shipped</span></td>
                                                 <td class="px-4 py-4">$124.50</td>
-                                                <td class="px-4 py-4"><a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View</a></td>
+                                                <td class="px-4 py-4"><a href="account.html?tab=tracking&order=ORD-7723" class="text-primary-600 hover:text-primary-800 transition-colors">Track</a></td>
                                             </tr>
                                             <tr>
                                                 <td class="px-4 py-4">#ORD-7652</td>
                                                 <td class="px-4 py-4">April 5, 2023</td>
                                                 <td class="px-4 py-4"><span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Delivered</span></td>
                                                 <td class="px-4 py-4">$31.50</td>
-                                                <td class="px-4 py-4"><a href="orders.html" class="text-primary-600 hover:text-primary-800 transition-colors">View</a></td>
+                                                <td class="px-4 py-4"><a href="account.html?tab=tracking&order=ORD-7652" class="text-primary-600 hover:text-primary-800 transition-colors">Track</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -436,7 +445,15 @@
                         
                         <!-- Orders Tab -->
                         <div id="orders" class="tab-content">
-                            <h2 class="text-2xl font-bold mb-6">My Orders</h2>
+                            <h2 class="text-2xl font-bold mb-4">My Orders</h2>
+                            <div class="mb-6 rounded-lg border border-primary-100 bg-primary-50/80 px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <p class="text-sm text-gray-700">
+                                    <i class="fas fa-info-circle text-primary-600 mr-1"></i>
+                                    <strong>Import local order:</strong> paste or upload your part list — smart match to our store catalog.
+                                    <span class="text-gray-500 block sm:inline sm:ml-1">（导入本地订单，智能匹配商城产品）</span>
+                                </p>
+                                <a href="import-order.html" class="inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white text-sm font-semibold rounded-md hover:bg-primary-700 shrink-0">Import order</a>
+                            </div>
                             
                             <!-- Order Filters -->
                             <div class="flex flex-wrap justify-between items-center mb-6">
@@ -485,11 +502,11 @@
                                                     <p class="text-gray-500 text-sm">Qty: 1</p>
                                                 </div>
                                             </div>
-                                            <div class="flex space-x-3">
-                                                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                                            <div class="flex flex-wrap gap-3">
+                                                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
                                                     View Details
                                                 </button>
-                                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors">
+                                                <button type="button" class="track-order-btn px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors" data-order="ORD-7845">
                                                     Track Order
                                                 </button>
                                             </div>
@@ -524,11 +541,11 @@
                                                     <p class="text-gray-500 text-sm">Qty: 1</p>
                                                 </div>
                                             </div>
-                                            <div class="flex space-x-3">
-                                                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                                            <div class="flex flex-wrap gap-3">
+                                                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
                                                     View Details
                                                 </button>
-                                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors">
+                                                <button type="button" class="track-order-btn px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors" data-order="ORD-7723">
                                                     Track Order
                                                 </button>
                                             </div>
@@ -563,11 +580,14 @@
                                                     <p class="text-gray-500 text-sm">Qty: 1</p>
                                                 </div>
                                             </div>
-                                            <div class="flex space-x-3">
-                                                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+                                            <div class="flex flex-wrap gap-3">
+                                                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
                                                     View Details
                                                 </button>
-                                                <button class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors">
+                                                <button type="button" class="track-order-btn px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors" data-order="ORD-7652">
+                                                    Track Order
+                                                </button>
+                                                <button type="button" class="px-4 py-2 border border-primary-600 text-primary-600 rounded-md hover:bg-primary-50 transition-colors">
                                                     Leave Review
                                                 </button>
                                             </div>
@@ -590,6 +610,24 @@
                                     </a>
                                 </nav>
                             </div>
+                        </div>
+
+                        <!-- Shipment tracking Tab -->
+                        <div id="tracking" class="tab-content">
+                            <h2 class="text-2xl font-bold">Track shipment</h2>
+                            <p class="text-gray-500 text-sm mt-1 mb-6">物流查询 — Enter an order number from your account to see carrier status and progress.</p>
+                            <form id="tracking-lookup-form" class="flex flex-col sm:flex-row gap-3 mb-4 max-w-xl">
+                                <label for="tracking-order-input" class="sr-only">Order number</label>
+                                <input type="text" id="tracking-order-input" name="order" autocomplete="off"
+                                    placeholder="e.g. ORD-7845 or 7845"
+                                    class="flex-1 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                <button type="submit" class="px-6 py-2.5 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-colors">
+                                    Track
+                                </button>
+                            </form>
+                            <p class="text-xs text-gray-500 mb-6">Demo orders you can try: <span class="font-mono">ORD-7845</span>, <span class="font-mono">ORD-7723</span>, <span class="font-mono">ORD-7652</span></p>
+                            <div id="tracking-error" class="hidden mb-4 p-3 rounded-lg bg-red-50 text-red-700 text-sm max-w-xl" role="alert"></div>
+                            <div id="tracking-result" class="hidden max-w-2xl"></div>
                         </div>
                         
                         <!-- Profile Tab -->
@@ -1067,6 +1105,7 @@
     </footer>
 
     <script src="js/auth.js"></script>
+    <script src="js/order-tracking.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var guest = document.getElementById('guest-gate');
@@ -1157,8 +1196,27 @@
             if (openTab && document.getElementById(openTab)) {
                 var openBtn = document.querySelector('.tab-button[data-tab="' + openTab + '"]');
                 if (openBtn) openBtn.click();
+                if (openTab === 'tracking') {
+                    var orderQ = new URLSearchParams(location.search).get('order');
+                    var trackInput = document.getElementById('tracking-order-input');
+                    if (orderQ && trackInput) {
+                        trackInput.value = orderQ;
+                        if (typeof window.APGTrackLookup === 'function') window.APGTrackLookup();
+                    }
+                }
             }
         }
+
+        document.querySelectorAll('.track-order-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var order = btn.getAttribute('data-order');
+                var tabBtn = document.querySelector('.tab-button[data-tab="tracking"]');
+                if (tabBtn) tabBtn.click();
+                var input = document.getElementById('tracking-order-input');
+                if (input) input.value = order || '';
+                if (typeof window.APGTrackLookup === 'function') window.APGTrackLookup();
+            });
+        });
         
         // AI Chat Assistant
         const aiChatContainer = document.getElementById('ai-chat-container');

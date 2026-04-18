@@ -85,9 +85,14 @@
 
     <section class="py-12">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+            <h1 class="text-3xl font-bold mb-4">Shopping Cart</h1>
+            <div id="cart-import-banner" class="hidden mb-6 rounded-lg border border-primary-200 bg-primary-50 px-4 py-3 text-sm text-primary-900">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span id="cart-import-banner-text">Items from your imported order are listed below.</span>
+            </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-4">
+                    <div id="apg-import-slot" class="space-y-4"></div>
                     <div class="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row gap-4">
                         <a href="product-detail.html" class="shrink-0 w-full sm:w-32 h-32 rounded-lg overflow-hidden">
                             <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/d5ee5b4a29e6cd14ee4f52ae0b4ed05b~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&amp;x-expires=1792033277&amp;x-signature=xrxHPF2Z9pYCYuBKzigaGtrs%2Fxc%3D" alt="Front Grille Assembly" class="w-full h-full object-cover">
@@ -212,5 +217,62 @@
             </div>
         </div>
     </footer>
+    <script src="js/order-import.js"></script>
+    <script>
+        (function () {
+            if (!window.APGOrderImport) return;
+            var items = APGOrderImport.getImportCart();
+            var slot = document.getElementById('apg-import-slot');
+            var banner = document.getElementById('cart-import-banner');
+            if (!items || !items.length || !slot) return;
+
+            function escapeHtml(s) {
+                var d = document.createElement('div');
+                d.textContent = s == null ? '' : String(s);
+                return d.innerHTML;
+            }
+
+            banner.classList.remove('hidden');
+            if (new URLSearchParams(location.search).get('from') === 'import') {
+                var bt = document.getElementById('cart-import-banner-text');
+                if (bt) bt.textContent = 'Added from import order. Review quantities and proceed to checkout.';
+            }
+
+            var html = '';
+            var i;
+            for (i = 0; i < items.length; i++) {
+                var it = items[i];
+                var sub = (it.price * it.qty).toFixed(2);
+                html +=
+                    '<div class="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row gap-4 border-l-4 border-primary-500">' +
+                    '<a href="' +
+                    it.href +
+                    '" class="shrink-0 w-full sm:w-32 h-32 rounded-lg overflow-hidden">' +
+                    '<img src="' +
+                    it.img +
+                    '" alt="" class="w-full h-full object-cover"></a>' +
+                    '<div class="flex-1">' +
+                    '<a href="' +
+                    it.href +
+                    '" class="text-lg font-semibold text-gray-900 hover:text-primary-600">' +
+                    escapeHtml(it.title) +
+                    '</a>' +
+                    '<p class="text-xs text-gray-500 mt-1">SKU ' +
+                    escapeHtml(it.sku) +
+                    ' · Match: ' +
+                    escapeHtml(it.confidence) +
+                    '</p>' +
+                    '<p class="text-sm text-gray-600 mt-2">Qty <strong>' +
+                    it.qty +
+                    '</strong></p>' +
+                    '</div>' +
+                    '<div class="text-right font-bold text-primary-600 text-xl">$' +
+                    sub +
+                    '</div>' +
+                    '</div>';
+            }
+            slot.innerHTML = html;
+        })();
+    </script>
 </body>
 </html>

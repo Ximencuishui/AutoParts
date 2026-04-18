@@ -70,7 +70,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100" data-admin-page="customers">
     <script src="js/auth.js"></script>
     <script>
         (function () {
@@ -99,47 +99,55 @@
                     <li class="px-4 py-2">
                         <a href="admin.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-tachometer-alt text-xl"></i>
-                            <span class="sidebar-text">Dashboard</span>
+                            <span class="sidebar-text" data-i18n="nav.dashboard">Dashboard</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
                         <a href="admin-products.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-boxes text-xl"></i>
-                            <span class="sidebar-text">Products</span>
+                            <span class="sidebar-text" data-i18n="nav.products">Products</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
                         <a href="admin-orders.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-shopping-cart text-xl"></i>
-                            <span class="sidebar-text">Orders</span>
+                            <span class="sidebar-text" data-i18n="nav.orders">Orders</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
                         <a href="admin-customers.html" class="flex items-center space-x-3 text-primary-300 hover:text-white p-2 rounded-md bg-gray-700">
                             <i class="fas fa-users text-xl"></i>
-                            <span class="sidebar-text">Customers</span>
+                            <span class="sidebar-text" data-i18n="nav.customers">Customers</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-reports.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-chart-line text-xl"></i>
-                            <span class="sidebar-text">Reports</span>
+                            <span class="sidebar-text" data-i18n="nav.reports">Reports</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-settings.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-cog text-xl"></i>
-                            <span class="sidebar-text">Settings</span>
+                            <span class="sidebar-text" data-i18n="nav.settings">Settings</span>
                         </a>
                     </li>
                 </ul>
             </nav>
+
+            <div class="px-4 py-3 border-t border-gray-700">
+                <p class="text-xs text-gray-400 mb-2 sidebar-text" data-i18n="lang.switch">Language</p>
+                <div class="flex rounded-md overflow-hidden border border-gray-600 text-xs">
+                    <button type="button" data-admin-lang="zh" class="flex-1 py-2 font-medium transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">中文</button>
+                    <button type="button" data-admin-lang="en" class="flex-1 py-2 font-medium transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">English</button>
+                </div>
+            </div>
             
             <!-- Footer -->
             <div class="sidebar-footer p-4 border-t border-gray-700">
                 <a href="admin-login.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                     <i class="fas fa-sign-out-alt text-xl"></i>
-                    <span class="sidebar-text">Logout</span>
+                    <span class="sidebar-text" data-i18n="nav.logout">Logout</span>
                 </a>
             </div>
         </aside>
@@ -148,7 +156,7 @@
         <main class="main-content flex-1 overflow-y-auto bg-gray-100 ml-64">
             <!-- Header -->
             <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0">
-                <h1 class="text-2xl font-bold text-gray-800">Customers</h1>
+                <h1 class="text-2xl font-bold text-gray-800" data-i18n="header.customers">Customers</h1>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <button class="text-gray-600 hover:text-primary-600">
@@ -158,21 +166,64 @@
                     </div>
                     <div class="flex items-center space-x-2">
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin User" class="h-8 w-8 rounded-full">
-                        <span class="font-semibold">Admin User</span>
+                        <span class="font-semibold" data-i18n="user.admin">Admin User</span>
                     </div>
                 </div>
             </header>
             
             <!-- Customers Content -->
             <div class="p-6">
+                <!-- Customer KPI cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500" data-i18n="customers.kpi_total">Total customers</p>
+                                <p class="text-2xl font-bold text-gray-900">892</p>
+                            </div>
+                            <div class="rounded-full bg-purple-100 p-3 text-purple-600"><i class="fas fa-user-friends text-lg"></i></div>
+                        </div>
+                        <p class="mt-3 text-xs text-gray-500" data-i18n="customers.kpi_total_sub">Registered accounts</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500" data-i18n="customers.kpi_new">New (30 days)</p>
+                                <p class="text-2xl font-bold text-primary-600">64</p>
+                            </div>
+                            <div class="rounded-full bg-primary-100 p-3 text-primary-600"><i class="fas fa-user-plus text-lg"></i></div>
+                        </div>
+                        <p class="mt-3 text-xs text-gray-500" data-i18n="customers.kpi_new_sub">First purchase or signup</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500" data-i18n="customers.kpi_repeat">Repeat buyers</p>
+                                <p class="text-2xl font-bold text-gray-900">312</p>
+                            </div>
+                            <div class="rounded-full bg-green-100 p-3 text-green-600"><i class="fas fa-redo text-lg"></i></div>
+                        </div>
+                        <p class="mt-3 text-xs text-gray-500" data-i18n="customers.kpi_repeat_sub">2+ orders lifetime</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500" data-i18n="customers.kpi_aov">Avg. order value</p>
+                                <p class="text-2xl font-bold text-gray-900">$186</p>
+                            </div>
+                            <div class="rounded-full bg-gray-100 p-3 text-gray-700"><i class="fas fa-receipt text-lg"></i></div>
+                        </div>
+                        <p class="mt-3 text-xs text-gray-500" data-i18n="customers.kpi_aov_sub">Last 90 days</p>
+                    </div>
+                </div>
                 <!-- Action Buttons -->
                 <div class="flex justify-between items-center mb-6">
                     <div class="flex items-center space-x-2">
-                        <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 flex items-center">
-                            <i class="fas fa-filter mr-2"></i> Filter
+                        <button type="button" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 flex items-center">
+                            <i class="fas fa-filter mr-2"></i> <span data-i18n="common.filter">Filter</span>
                         </button>
-                        <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 flex items-center">
-                            <i class="fas fa-download mr-2"></i> Export
+                        <button type="button" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 flex items-center">
+                            <i class="fas fa-download mr-2"></i> <span data-i18n="common.export">Export</span>
                         </button>
                     </div>
                 </div>
@@ -183,22 +234,22 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.customer">
                                         Customer
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.email">
                                         Email
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.phone">
                                         Phone
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.total_orders">
                                         Total Orders
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.total_spend">
                                         Total Spend
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.action">
                                         Action
                                     </th>
                                 </tr>
@@ -230,7 +281,7 @@
                                         <div class="text-sm text-gray-900">$1,245.00</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="1">View</a>
+                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="1" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                                 <!-- Customer 2 -->
@@ -259,7 +310,7 @@
                                         <div class="text-sm text-gray-900">$345.50</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="2">View</a>
+                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="2" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                                 <!-- Customer 3 -->
@@ -288,7 +339,7 @@
                                         <div class="text-sm text-gray-900">$2,156.75</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="3">View</a>
+                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="3" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                                 <!-- Customer 4 -->
@@ -317,7 +368,7 @@
                                         <div class="text-sm text-gray-900">$89.99</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="4">View</a>
+                                        <a href="#" class="text-primary-600 hover:text-primary-900 view-customer" data-id="4" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -326,10 +377,10 @@
                     <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                         <div class="flex-1 flex justify-between sm:hidden">
                             <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Previous
+                                <span data-i18n="common.previous">Previous</span>
                             </a>
                             <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                Next
+                                <span data-i18n="common.next">Next</span>
                             </a>
                         </div>
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
@@ -370,7 +421,7 @@
     <div id="customer-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl">
             <div class="flex justify-between items-center border-b border-gray-200 px-6 py-4">
-                <h3 class="text-xl font-semibold text-gray-900">Customer Details: <span id="modal-customer-name">John Doe</span></h3>
+                <h3 class="text-xl font-semibold text-gray-900"><span data-i18n="customers.modal_title">Customer Details:</span> <span id="modal-customer-name">John Doe</span></h3>
                 <button id="close-modal" class="text-gray-400 hover:text-gray-500">
                     <i class="fas fa-times"></i>
                 </button>
@@ -378,18 +429,18 @@
             <div class="p-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <h4 class="text-lg font-semibold mb-2">Contact Information</h4>
-                        <p class="text-gray-600"><strong>Email:</strong> <span id="modal-email">john.doe@example.com</span></p>
-                        <p class="text-gray-600"><strong>Phone:</strong> <span id="modal-phone">(123) 456-7890</span></p>
-                        <p class="text-gray-600"><strong>Member Since:</strong> <span id="modal-member-since">January 15, 2022</span></p>
+                        <h4 class="text-lg font-semibold mb-2" data-i18n="customers.contact_info">Contact Information</h4>
+                        <p class="text-gray-600"><strong data-i18n="orders.label_email">Email:</strong> <span id="modal-email">john.doe@example.com</span></p>
+                        <p class="text-gray-600"><strong data-i18n="orders.label_phone">Phone:</strong> <span id="modal-phone">(123) 456-7890</span></p>
+                        <p class="text-gray-600"><strong data-i18n="customers.label_member_since">Member Since:</strong> <span id="modal-member-since">January 15, 2022</span></p>
                     </div>
                     <div>
-                        <h4 class="text-lg font-semibold mb-2">Address</h4>
+                        <h4 class="text-lg font-semibold mb-2" data-i18n="customers.address_title">Address</h4>
                         <p class="text-gray-600" id="modal-address">123 Main St, Apt 4B, New York, NY 10001</p>
                     </div>
                 </div>
 
-                <h4 class="text-lg font-semibold mb-4">Order History</h4>
+                <h4 class="text-lg font-semibold mb-4" data-i18n="customers.order_history">Order History</h4>
                 <div class="bg-gray-50 overflow-hidden shadow sm:rounded-md mb-6">
                     <ul role="list" class="divide-y divide-gray-200">
                         <li>
@@ -432,37 +483,40 @@
         </div>
     </div>
 
+    <script src="js/admin-i18n.js"></script>
     <script>
-        // Sidebar Toggle
-        const sidebar = document.querySelector('.sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.APGAdminI18n) {
+                APGAdminI18n.init();
+            }
 
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-        });
+            var sidebar = document.querySelector('.sidebar');
+            var sidebarToggle = document.getElementById('sidebar-toggle');
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function () {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
 
-        // Modal Logic
-        const customerModal = document.getElementById('customer-modal');
-        const closeModalBtn = document.getElementById('close-modal');
-        const viewButtons = document.querySelectorAll('.view-customer');
+            var customerModal = document.getElementById('customer-modal');
+            var closeModalBtn = document.getElementById('close-modal');
+            var viewButtons = document.querySelectorAll('.view-customer');
 
-        function openModal(customerId) {
-            // Here you would typically fetch customer data and populate the modal
-            // For demo, we'll just simulate it.
-            customerModal.classList.remove('hidden');
-        }
+            function openModal() {
+                customerModal.classList.remove('hidden');
+            }
 
-        function closeModal() {
-            customerModal.classList.add('hidden');
-        }
+            function closeModal() {
+                customerModal.classList.add('hidden');
+            }
 
-        closeModalBtn.addEventListener('click', closeModal);
+            closeModalBtn.addEventListener('click', closeModal);
 
-        viewButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const customerId = button.getAttribute('data-id');
-                openModal(customerId);
+            viewButtons.forEach(function (button) {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openModal();
+                });
             });
         });
     </script>

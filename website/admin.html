@@ -72,7 +72,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100" data-admin-page="dashboard">
     <script src="js/auth.js"></script>
     <script>
         (function () {
@@ -99,49 +99,57 @@
             <nav class="flex-1 overflow-y-auto py-4">
                 <ul>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-primary-300 hover:text-white p-2 rounded-md bg-gray-700">
+                        <a href="admin.html" class="flex items-center space-x-3 text-primary-300 hover:text-white p-2 rounded-md bg-gray-700">
                             <i class="fas fa-tachometer-alt text-xl"></i>
-                            <span class="sidebar-text">Dashboard</span>
+                            <span class="sidebar-text" data-i18n="nav.dashboard">Dashboard</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-products.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-boxes text-xl"></i>
-                            <span class="sidebar-text">Products</span>
+                            <span class="sidebar-text" data-i18n="nav.products">Products</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-orders.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-shopping-cart text-xl"></i>
-                            <span class="sidebar-text">Orders</span>
+                            <span class="sidebar-text" data-i18n="nav.orders">Orders</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-customers.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-users text-xl"></i>
-                            <span class="sidebar-text">Customers</span>
+                            <span class="sidebar-text" data-i18n="nav.customers">Customers</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-reports.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-chart-line text-xl"></i>
-                            <span class="sidebar-text">Reports</span>
+                            <span class="sidebar-text" data-i18n="nav.reports">Reports</span>
                         </a>
                     </li>
                     <li class="px-4 py-2">
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
+                        <a href="admin-settings.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                             <i class="fas fa-cog text-xl"></i>
-                            <span class="sidebar-text">Settings</span>
+                            <span class="sidebar-text" data-i18n="nav.settings">Settings</span>
                         </a>
                     </li>
                 </ul>
             </nav>
+
+            <div class="px-4 py-3 border-t border-gray-700">
+                <p class="text-xs text-gray-400 mb-2 sidebar-text" data-i18n="lang.switch">Language</p>
+                <div class="flex rounded-md overflow-hidden border border-gray-600 text-xs">
+                    <button type="button" data-admin-lang="zh" class="flex-1 py-2 font-medium transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">中文</button>
+                    <button type="button" data-admin-lang="en" class="flex-1 py-2 font-medium transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">English</button>
+                </div>
+            </div>
             
             <!-- Footer -->
             <div class="sidebar-footer p-4 border-t border-gray-700">
                 <a href="admin-login.html" class="flex items-center space-x-3 text-gray-300 hover:text-white p-2 rounded-md hover:bg-gray-700">
                     <i class="fas fa-sign-out-alt text-xl"></i>
-                    <span class="sidebar-text">Logout</span>
+                    <span class="sidebar-text" data-i18n="nav.logout">Logout</span>
                 </a>
             </div>
         </aside>
@@ -150,7 +158,7 @@
         <main class="main-content flex-1 overflow-y-auto bg-gray-100 ml-64">
             <!-- Header -->
             <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0">
-                <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+                    <h1 class="text-2xl font-bold text-gray-800" data-i18n="header.dashboard">Dashboard</h1>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <button class="text-gray-600 hover:text-primary-600">
@@ -160,7 +168,7 @@
                     </div>
                     <div class="flex items-center space-x-2">
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin User" class="h-8 w-8 rounded-full">
-                        <span class="font-semibold">Admin User</span>
+                        <span class="font-semibold" data-i18n="user.admin">Admin User</span>
                     </div>
                 </div>
             </header>
@@ -172,7 +180,7 @@
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Total Sales</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stats.total_sales">Total Sales</p>
                                 <p class="text-3xl font-bold text-gray-800">$12,458</p>
                             </div>
                             <div class="bg-primary-100 p-3 rounded-full">
@@ -183,14 +191,14 @@
                             <span class="text-green-500 flex items-center">
                                 <i class="fas fa-arrow-up mr-1"></i> 12%
                             </span>
-                            <span class="text-gray-500 ml-2">from last month</span>
+                            <span class="text-gray-500 ml-2" data-i18n="stats.from_last_month">from last month</span>
                         </div>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Total Orders</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stats.total_orders">Total Orders</p>
                                 <p class="text-3xl font-bold text-gray-800">342</p>
                             </div>
                             <div class="bg-blue-100 p-3 rounded-full">
@@ -201,14 +209,14 @@
                             <span class="text-green-500 flex items-center">
                                 <i class="fas fa-arrow-up mr-1"></i> 8%
                             </span>
-                            <span class="text-gray-500 ml-2">from last month</span>
+                            <span class="text-gray-500 ml-2" data-i18n="stats.from_last_month">from last month</span>
                         </div>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Total Products</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stats.total_products">Total Products</p>
                                 <p class="text-3xl font-bold text-gray-800">1,254</p>
                             </div>
                             <div class="bg-green-100 p-3 rounded-full">
@@ -219,14 +227,14 @@
                             <span class="text-green-500 flex items-center">
                                 <i class="fas fa-arrow-up mr-1"></i> 5%
                             </span>
-                            <span class="text-gray-500 ml-2">from last month</span>
+                            <span class="text-gray-500 ml-2" data-i18n="stats.from_last_month">from last month</span>
                         </div>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Total Customers</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stats.total_customers">Total Customers</p>
                                 <p class="text-3xl font-bold text-gray-800">892</p>
                             </div>
                             <div class="bg-purple-100 p-3 rounded-full">
@@ -237,22 +245,79 @@
                             <span class="text-green-500 flex items-center">
                                 <i class="fas fa-arrow-up mr-1"></i> 15%
                             </span>
-                            <span class="text-gray-500 ml-2">from last month</span>
+                            <span class="text-gray-500 ml-2" data-i18n="stats.from_last_month">from last month</span>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Module shortcuts — each menu area -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4" data-i18n="mgmt.title">Management</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <a href="admin-products.html" class="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100 hover:border-primary-200">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-primary-600 mb-1" data-i18n="mgmt.catalog">Catalog</p>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary-700" data-i18n="mgmt.products_title">Products</h3>
+                                    <p class="mt-2 text-sm text-gray-500" data-i18n="mgmt.products_desc">SKUs, pricing, stock levels, and categories.</p>
+                                </div>
+                                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600"><i class="fas fa-boxes text-xl"></i></span>
+                            </div>
+                        </a>
+                        <a href="admin-orders.html" class="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100 hover:border-primary-200">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-primary-600 mb-1" data-i18n="mgmt.fulfillment">Fulfillment</p>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary-700" data-i18n="mgmt.orders_title">Orders</h3>
+                                    <p class="mt-2 text-sm text-gray-500" data-i18n="mgmt.orders_desc">Payment status, packing, shipping, and returns.</p>
+                                </div>
+                                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600"><i class="fas fa-shopping-cart text-xl"></i></span>
+                            </div>
+                        </a>
+                        <a href="admin-customers.html" class="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100 hover:border-primary-200">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-primary-600 mb-1" data-i18n="mgmt.crm">CRM</p>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary-700" data-i18n="mgmt.customers_title">Customers</h3>
+                                    <p class="mt-2 text-sm text-gray-500" data-i18n="mgmt.customers_desc">Profiles, order history, and lifetime value.</p>
+                                </div>
+                                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-600"><i class="fas fa-users text-xl"></i></span>
+                            </div>
+                        </a>
+                        <a href="admin-reports.html" class="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100 hover:border-primary-200">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-primary-600 mb-1" data-i18n="mgmt.analytics">Analytics</p>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary-700" data-i18n="mgmt.reports_title">Reports</h3>
+                                    <p class="mt-2 text-sm text-gray-500" data-i18n="mgmt.reports_desc">Sales trends, channels, and export snapshots.</p>
+                                </div>
+                                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700"><i class="fas fa-chart-line text-xl"></i></span>
+                            </div>
+                        </a>
+                        <a href="admin-settings.html" class="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border border-gray-100 hover:border-primary-200 md:col-span-2 lg:col-span-1">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-primary-600 mb-1" data-i18n="mgmt.config">Configuration</p>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary-700" data-i18n="mgmt.settings_title">Settings</h3>
+                                    <p class="mt-2 text-sm text-gray-500" data-i18n="mgmt.settings_desc">Store profile, shipping, notifications, and security.</p>
+                                </div>
+                                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-200 text-gray-700"><i class="fas fa-cog text-xl"></i></span>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Charts -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <div class="bg-white rounded-lg shadow-md p-6">
-                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Sales Overview</h2>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4" data-i18n="chart.sales_overview">Sales Overview</h2>
                         <div class="h-80">
                             <canvas id="sales-chart"></canvas>
                         </div>
                     </div>
                     
                     <div class="bg-white rounded-lg shadow-md p-6">
-                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Top Products</h2>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4" data-i18n="chart.top_products">Top Products</h2>
                         <div class="h-80">
                             <canvas id="top-products-chart"></canvas>
                         </div>
@@ -261,17 +326,17 @@
                 
                 <!-- Recent Orders -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Orders</h2>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4" data-i18n="table.recent_orders">Recent Orders</h2>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.order_id">Order ID</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.customer">Customer</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.date">Date</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.total">Total</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.status">Status</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="table.action">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -281,10 +346,10 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">July 21, 2023</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$299.99</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Shipped</span>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" data-i18n="status.shipped">Shipped</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900">View</a>
+                                        <a href="admin-orders.html" class="text-primary-600 hover:text-primary-900" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -293,10 +358,10 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">July 20, 2023</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$159.95</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800" data-i18n="status.processing">Processing</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900">View</a>
+                                        <a href="admin-orders.html" class="text-primary-600 hover:text-primary-900" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -305,10 +370,10 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">July 19, 2023</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$429.99</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Delivered</span>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" data-i18n="status.delivered">Delivered</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900">View</a>
+                                        <a href="admin-orders.html" class="text-primary-600 hover:text-primary-900" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -317,10 +382,10 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">July 18, 2023</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$89.99</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800" data-i18n="status.cancelled">Cancelled</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-primary-600 hover:text-primary-900">View</a>
+                                        <a href="admin-orders.html" class="text-primary-600 hover:text-primary-900" data-i18n="common.view">View</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -331,70 +396,87 @@
         </main>
     </div>
 
+    <script src="js/admin-i18n.js"></script>
     <script>
-        // Sidebar Toggle
-        const sidebar = document.querySelector('.sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-        });
-
-        // Sales Chart
-        const salesChartCtx = document.getElementById('sales-chart').getContext('2d');
-        const salesChart = new Chart(salesChartCtx, {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [12, 19, 3, 5, 2, 3, 7],
-                    backgroundColor: 'rgba(0, 102, 255, 0.2)',
-                    borderColor: 'rgba(0, 102, 255, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.APGAdminI18n) {
+                APGAdminI18n.init();
             }
-        });
 
-        // Top Products Chart
-        const topProductsChartCtx = document.getElementById('top-products-chart').getContext('2d');
-        const topProductsChart = new Chart(topProductsChartCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Front Grille', 'Headlights', 'Brake Pads', 'Alternator', 'Oil Filter'],
-                datasets: [{
-                    label: 'Top Products',
-                    data: [300, 50, 100, 80, 120],
-                    backgroundColor: [
-                        'rgba(0, 102, 255, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                    ],
-                    borderColor: [
-                        'rgba(0, 102, 255, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
+            var sidebar = document.querySelector('.sidebar');
+            var sidebarToggle = document.getElementById('sidebar-toggle');
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function () {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
+
+            var zh = window.APGAdminI18n && APGAdminI18n.getLang() === 'zh';
+            var monthLabels = zh
+                ? ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
+                : ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+            var productLabels = zh
+                ? ['前格栅', '大灯', '刹车片', '发电机', '机油滤清器']
+                : ['Front Grille', 'Headlights', 'Brake Pads', 'Alternator', 'Oil Filter'];
+
+            var salesChartCtx = document.getElementById('sales-chart');
+            if (salesChartCtx) {
+                new Chart(salesChartCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: monthLabels,
+                        datasets: [{
+                            label: zh ? '销售额' : 'Sales',
+                            data: [12, 19, 3, 5, 2, 3, 7],
+                            backgroundColor: 'rgba(0, 102, 255, 0.2)',
+                            borderColor: 'rgba(0, 102, 255, 1)',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            var topProductsChartCtx = document.getElementById('top-products-chart');
+            if (topProductsChartCtx) {
+                new Chart(topProductsChartCtx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: productLabels,
+                        datasets: [{
+                            label: zh ? '热销' : 'Top Products',
+                            data: [300, 50, 100, 80, 120],
+                            backgroundColor: [
+                                'rgba(0, 102, 255, 0.8)',
+                                'rgba(54, 162, 235, 0.8)',
+                                'rgba(255, 206, 86, 0.8)',
+                                'rgba(75, 192, 192, 0.8)',
+                                'rgba(153, 102, 255, 0.8)',
+                            ],
+                            borderColor: [
+                                'rgba(0, 102, 255, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }
+                });
             }
         });
     </script>

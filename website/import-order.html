@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import order | AutoParts Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#0066ff', 600: '#0052cc', 700: '#003d99',
+                        },
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script src="js/auth.js"></script>
+    <script src="js/order-import.js"></script>
+    <script>
+        (function () {
+            if (!window.APGAuth || !APGAuth.isLoggedIn()) {
+                window.location.replace('login.html?next=import-order.html');
+                return;
+            }
+            if (APGAuth.getSession().role === 'admin') {
+                window.location.replace('admin.html');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <a href="index.html">
+                        <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="Logo" class="h-12">
+                    </a>
+                    <span class="text-2xl font-bold text-primary-600">AutoParts Global</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-600">Home</a>
+                    <a href="shop.html" class="text-gray-600 hover:text-primary-600">Products</a>
+                    <a href="orders.html" class="text-primary-600 font-medium">Orders</a>
+                </nav>
+                <a href="cart.html" class="text-gray-600 hover:text-primary-600 relative" aria-label="Cart">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3 text-sm">
+            <a href="index.html" class="text-gray-500 hover:text-primary-600">Home</a>
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="orders.html" class="text-gray-500 hover:text-primary-600">Orders</a>
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="text-gray-700 font-medium">Import order</span>
+        </div>
+    </div>
+
+    <section class="py-10">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Import order</h1>
+            <p class="text-gray-600 mb-1">Paste a part list or upload a plain-text / CSV file from your local order. We match lines to our catalog by keywords and SKU.</p>
+            <p class="text-sm text-gray-500 mb-8 border-l-4 border-primary-500 pl-4 py-1 bg-primary-50/80 rounded-r">
+                <strong class="text-gray-700">说明：</strong>您可从本地订单导出 TXT/CSV，或直接粘贴零件行。系统将<strong>智能匹配</strong>本商城产品库（关键词 + 零件编号）；未匹配行请手动在商城搜索或联系客服。此为前台演示，不保存您的文件。
+            </p>
+
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <label for="import-text" class="block text-sm font-medium text-gray-700 mb-2">Order lines</label>
+                <textarea id="import-text" rows="10" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm font-mono focus:ring-2 focus:ring-primary-500 focus:border-primary-500" placeholder="Example:&#10;Front Grille Assembly x 2&#10;2 x Oil Filter&#10;APG-CAM-F150, 1&#10;Brake Pad Set, 3"></textarea>
+                <div class="mt-4 flex flex-wrap items-center gap-4">
+                    <label class="inline-flex items-center gap-2 text-sm text-primary-700 cursor-pointer bg-primary-50 px-3 py-2 rounded-lg border border-primary-100 hover:bg-primary-100">
+                        <i class="fas fa-file-upload"></i>
+                        <span>Upload .txt / .csv</span>
+                        <input type="file" id="import-file" accept=".txt,.csv,text/plain,text/csv" class="hidden">
+                    </label>
+                    <button type="button" id="btn-load-sample" class="text-sm text-gray-600 hover:text-primary-600 underline">Load sample</button>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button type="button" id="btn-match" class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors">
+                        <i class="fas fa-magic mr-2"></i>Match to catalog
+                    </button>
+                    <a href="orders.html" class="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">Back to orders</a>
+                </div>
+            </div>
+
+            <div id="match-empty" class="text-center py-8 text-gray-500 text-sm hidden">
+                No lines parsed. Add one part per line (with optional quantity).
+            </div>
+
+            <div id="match-results-wrap" class="hidden">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Match results</h2>
+                <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 text-left text-gray-600">
+                                <th class="px-4 py-3 font-medium w-10">
+                                    <input type="checkbox" id="check-all" checked title="Select all matched" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                                </th>
+                                <th class="px-4 py-3 font-medium">Your line</th>
+                                <th class="px-4 py-3 font-medium">Matched product</th>
+                                <th class="px-4 py-3 font-medium">SKU</th>
+                                <th class="px-4 py-3 font-medium">Qty</th>
+                                <th class="px-4 py-3 font-medium">Price</th>
+                                <th class="px-4 py-3 font-medium">Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="match-tbody" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-3 items-center">
+                    <button type="button" id="btn-add-cart" class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg">
+                        <i class="fas fa-cart-plus mr-2"></i>Add selected to cart
+                    </button>
+                    <a href="shop.html" class="text-primary-600 font-medium hover:underline">Browse catalog</a>
+                </div>
+                <p id="import-toast" class="hidden mt-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2"></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-sm text-gray-400">
+            <a href="account.html" class="hover:text-white">Account</a> · <a href="orders.html" class="hover:text-white">Orders</a> · © 2026 AutoParts Global
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            var lastResults = [];
+            var textEl = document.getElementById('import-text');
+            var fileEl = document.getElementById('import-file');
+            var tbody = document.getElementById('match-tbody');
+            var wrap = document.getElementById('match-results-wrap');
+            var emptyEl = document.getElementById('match-empty');
+
+            document.getElementById('btn-load-sample').addEventListener('click', function () {
+                textEl.value = [
+                    'Front Grille Assembly x 2',
+                    '2 x Oil Filter',
+                    'APG-CAM-F150, 1',
+                    'Brake Pad Set, 3',
+                    'Random local part description xyz'
+                ].join('\n');
+            });
+
+            fileEl.addEventListener('change', function () {
+                var f = fileEl.files[0];
+                if (!f) return;
+                var reader = new FileReader();
+                reader.onload = function () {
+                    textEl.value = reader.result;
+                };
+                reader.readAsText(f, 'UTF-8');
+                fileEl.value = '';
+            });
+
+            function badgeClass(c) {
+                if (c === 'high') return 'bg-green-100 text-green-800';
+                if (c === 'medium') return 'bg-amber-100 text-amber-800';
+                if (c === 'low') return 'bg-orange-100 text-orange-800';
+                return 'bg-gray-100 text-gray-600';
+            }
+
+            function renderRows(results) {
+                tbody.innerHTML = '';
+                lastResults = results;
+                var i;
+                for (i = 0; i < results.length; i++) {
+                    var r = results[i];
+                    var tr = document.createElement('tr');
+                    tr.className = 'hover:bg-gray-50';
+                    var prod = r.product;
+                    var canCheck = prod !== null;
+                    tr.innerHTML =
+                        '<td class="px-4 py-3">' +
+                        (canCheck
+                            ? '<input type="checkbox" class="row-check rounded border-gray-300 text-primary-600" data-idx="' +
+                              i +
+                              '" checked>'
+                            : '—') +
+                        '</td>' +
+                        '<td class="px-4 py-3 text-gray-700 max-w-xs">' +
+                        escapeHtml(r.parsed.raw) +
+                        '</td>' +
+                        '<td class="px-4 py-3">' +
+                        (prod
+                            ? '<span class="font-medium text-gray-900">' + escapeHtml(prod.title) + '</span>'
+                            : '<span class="text-red-600">No match</span>') +
+                        '</td>' +
+                        '<td class="px-4 py-3 font-mono text-xs">' +
+                        (prod ? escapeHtml(prod.sku) : '—') +
+                        '</td>' +
+                        '<td class="px-4 py-3">' +
+                        r.parsed.qty +
+                        '</td>' +
+                        '<td class="px-4 py-3">' +
+                        (prod ? '$' + prod.price.toFixed(2) : '—') +
+                        '</td>' +
+                        '<td class="px-4 py-3"><span class="text-xs px-2 py-0.5 rounded-full ' +
+                        badgeClass(r.confidence) +
+                        '">' +
+                        (r.confidence === 'none' ? 'No match' : r.confidence) +
+                        '</span></td>';
+                    tbody.appendChild(tr);
+                }
+
+                var checkAll = document.getElementById('check-all');
+                checkAll.checked = true;
+                checkAll.onclick = function () {
+                    var boxes = document.querySelectorAll('.row-check');
+                    var j;
+                    for (j = 0; j < boxes.length; j++) boxes[j].checked = checkAll.checked;
+                };
+            }
+
+            function escapeHtml(s) {
+                var d = document.createElement('div');
+                d.textContent = s;
+                return d.innerHTML;
+            }
+
+            document.getElementById('btn-match').addEventListener('click', function () {
+                var results = APGOrderImport.matchText(textEl.value);
+                emptyEl.classList.add('hidden');
+                wrap.classList.add('hidden');
+                if (!results.length) {
+                    emptyEl.textContent = 'No lines parsed. Try one part per line, e.g. "Camshaft x 2".';
+                    emptyEl.classList.remove('hidden');
+                    return;
+                }
+                wrap.classList.remove('hidden');
+                renderRows(results);
+            });
+
+            document.getElementById('btn-add-cart').addEventListener('click', function () {
+                var boxes = document.querySelectorAll('.row-check:checked');
+                var cartItems = [];
+                var i;
+                for (i = 0; i < boxes.length; i++) {
+                    var idx = parseInt(boxes[i].getAttribute('data-idx'), 10);
+                    var r = lastResults[idx];
+                    if (!r || !r.product) continue;
+                    cartItems.push({
+                        sku: r.product.sku,
+                        title: r.product.title,
+                        price: r.product.price,
+                        qty: r.parsed.qty,
+                        href: r.product.href,
+                        img: r.product.img,
+                        confidence: r.confidence
+                    });
+                }
+                if (!cartItems.length) {
+                    alert('Select at least one matched line with a checkbox.');
+                    return;
+                }
+                APGOrderImport.saveImportCart(cartItems);
+                var toast = document.getElementById('import-toast');
+                toast.textContent = 'Added ' + cartItems.length + ' line(s). Opening cart…';
+                toast.classList.remove('hidden');
+                setTimeout(function () {
+                    window.location.href = 'cart.html?from=import';
+                }, 400);
+            });
+        })();
+    </script>
+</body>
+</html>

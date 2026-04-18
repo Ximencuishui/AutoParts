@@ -52,7 +52,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4" data-admin-page="login">
     <div class="login-container w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
         <!-- Left Side (Brand) -->
         <div class="hidden md:flex md:w-1/2 bg-primary-700 p-8 text-white flex-col justify-between">
@@ -61,24 +61,28 @@
                     <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-10 bg-white p-1 rounded">
                     <span class="text-2xl font-bold">AutoParts Global</span>
                 </div>
-                <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
-                <p class="text-primary-100">Manage your products, orders, and customers with our powerful admin panel.</p>
+                <h1 class="text-3xl font-bold mb-4" data-i18n="login.brand_title">Admin Dashboard</h1>
+                <p class="text-primary-100" data-i18n="login.brand_desc">Manage your products, orders, and customers with our powerful admin panel.</p>
             </div>
             <div class="mt-12">
-                <p class="text-sm text-primary-200">© 2023 AutoParts Global. All rights reserved.</p>
+                <p class="text-sm text-primary-200" data-i18n="login.copyright">© 2023 AutoParts Global. All rights reserved.</p>
             </div>
         </div>
         
         <!-- Right Side (Form) -->
         <div class="w-full md:w-1/2 bg-white p-8 md:p-12">
+            <div class="flex justify-end gap-1 mb-4">
+                <button type="button" data-admin-lang="zh" class="px-3 py-1.5 text-xs font-medium rounded-md transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">中文</button>
+                <button type="button" data-admin-lang="en" class="px-3 py-1.5 text-xs font-medium rounded-md transition-colors bg-gray-800 text-gray-300 hover:bg-gray-600">English</button>
+            </div>
             <div class="md:hidden flex items-center space-x-2 mb-6">
                 <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/856ffb6de9cb48bbb0ea4c76e0e782cf~tplv-a9rns2rl98-image.image?lk3s=8e244e95&amp;rcl=20260418110103A55FB85B9A4E74181EF9&amp;rrcfp=f06b921b&amp;x-expires=1779073300&amp;x-signature=T4sdFIYJPoEvrAYuMmih9WAdg%2B4%3D" alt="AutoParts Global Logo" class="h-8">
                 <span class="text-xl font-bold text-primary-600">AutoParts Global</span>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Sign in to your account</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6" data-i18n="login.form_title">Sign in to your account</h2>
             <form id="login-form">
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+                    <label for="email" class="block text-gray-700 text-sm font-medium mb-2" data-i18n="login.email">Email Address</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                             <i class="fas fa-envelope"></i>
@@ -87,7 +91,7 @@
                     </div>
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                    <label for="password" class="block text-gray-700 text-sm font-medium mb-2" data-i18n="login.password">Password</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                             <i class="fas fa-lock"></i>
@@ -101,24 +105,29 @@
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center">
                         <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700" data-i18n="login.remember">Remember me</label>
                     </div>
-                    <a href="#" class="text-sm text-primary-600 hover:text-primary-500">Forgot password?</a>
+                    <a href="#" class="text-sm text-primary-600 hover:text-primary-500" data-i18n="login.forgot">Forgot password?</a>
                 </div>
                 <div id="admin-login-error" class="hidden mb-4 p-3 rounded-md bg-red-50 text-red-700 text-sm" role="alert"></div>
                 <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-md transition-colors flex items-center justify-center">
                     <i class="fas fa-sign-in-alt mr-2"></i>
-                    Sign In
+                    <span data-i18n="login.submit">Sign In</span>
                 </button>
             </form>
-            <p class="mt-4 text-xs text-gray-500">Demo admin: <code class="bg-gray-100 px-1 rounded">admin@autoparts.global</code> / <code class="bg-gray-100 px-1 rounded">admin123</code></p>
-            <button type="button" id="fill-admin-demo" class="mt-2 text-sm text-primary-600 hover:text-primary-800 font-medium">Fill admin credentials</button>
+            <p class="mt-4 text-xs text-gray-500"><span data-i18n="login.demo_hint">Demo admin:</span> <code class="bg-gray-100 px-1 rounded">admin@autoparts.global</code> / <code class="bg-gray-100 px-1 rounded">admin123</code></p>
+            <button type="button" id="fill-admin-demo" class="mt-2 text-sm text-primary-600 hover:text-primary-800 font-medium" data-i18n="login.fill_demo">Fill admin credentials</button>
         </div>
     </div>
 
+    <script src="js/admin-i18n.js"></script>
     <script src="js/auth.js"></script>
     <script>
-        (function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.APGAdminI18n) {
+                APGAdminI18n.init();
+            }
+
             var errEl = document.getElementById('admin-login-error');
             var emailEl = document.getElementById('email');
             var passEl = document.getElementById('password');
@@ -161,7 +170,7 @@
                     showErr(r.message || 'Invalid email or password.');
                 }
             });
-        })();
+        });
     </script>
 </body>
 </html>
