@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account | AutoParts Global</title>
     <!-- Tailwind CSS -->
@@ -1075,6 +1076,11 @@
             if (!guest || !main) return;
 
             if (window.APGAuth.isLoggedIn()) {
+                var sess = window.APGAuth.getSession();
+                if (sess && sess.role === 'admin') {
+                    window.location.replace('admin.html');
+                    return;
+                }
                 guest.classList.add('hidden');
                 main.classList.remove('hidden');
                 if (menuIn) menuIn.classList.remove('hidden');

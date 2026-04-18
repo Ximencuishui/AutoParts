@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | AutoParts Global</title>
     <!-- Tailwind CSS -->
@@ -104,40 +105,63 @@
                     </div>
                     <a href="#" class="text-sm text-primary-600 hover:text-primary-500">Forgot password?</a>
                 </div>
+                <div id="admin-login-error" class="hidden mb-4 p-3 rounded-md bg-red-50 text-red-700 text-sm" role="alert"></div>
                 <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-md transition-colors flex items-center justify-center">
                     <i class="fas fa-sign-in-alt mr-2"></i>
                     Sign In
                 </button>
             </form>
+            <p class="mt-4 text-xs text-gray-500">Demo admin: <code class="bg-gray-100 px-1 rounded">admin@autoparts.global</code> / <code class="bg-gray-100 px-1 rounded">admin123</code></p>
+            <button type="button" id="fill-admin-demo" class="mt-2 text-sm text-primary-600 hover:text-primary-800 font-medium">Fill admin credentials</button>
         </div>
     </div>
 
+    <script src="js/auth.js"></script>
     <script>
-        // Toggle Password Visibility
-        const togglePassword = document.getElementById('toggle-password');
-        const password = document.getElementById('password');
+        (function () {
+            var errEl = document.getElementById('admin-login-error');
+            var emailEl = document.getElementById('email');
+            var passEl = document.getElementById('password');
 
-        togglePassword.addEventListener('click', () => {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            togglePassword.classList.toggle('fa-eye');
-            togglePassword.classList.toggle('fa-eye-slash');
-        });
-
-        // Login Form Submission
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // Simple validation (replace with actual authentication)
-            if (email === 'admin@example.com' && password === 'password') {
-                window.location.href = 'admin.html';
-            } else {
-                alert('Invalid email or password. Please try again.');
+            function showErr(msg) {
+                errEl.textContent = msg;
+                errEl.classList.remove('hidden');
             }
-        });
+            function clearErr() {
+                errEl.classList.add('hidden');
+            }
+
+            if (window.APGAuth && APGAuth.isLoggedIn() && APGAuth.getSession().role === 'admin') {
+                window.location.replace('admin.html');
+                return;
+            }
+
+            document.getElementById('fill-admin-demo').addEventListener('click', function () {
+                var u = APGAuth.BUILTIN[1];
+                emailEl.value = u.email;
+                passEl.value = u.password;
+                clearErr();
+            });
+
+            var togglePassword = document.getElementById('toggle-password');
+            togglePassword.addEventListener('click', function () {
+                var type = passEl.getAttribute('type') === 'password' ? 'text' : 'password';
+                passEl.setAttribute('type', type);
+                togglePassword.classList.toggle('fa-eye');
+                togglePassword.classList.toggle('fa-eye-slash');
+            });
+
+            document.getElementById('login-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                clearErr();
+                var r = APGAuth.loginAdmin(emailEl.value, passEl.value);
+                if (r.ok) {
+                    window.location.href = 'admin.html';
+                } else {
+                    showErr(r.message || 'Invalid email or password.');
+                }
+            });
+        })();
     </script>
 </body>
 </html>

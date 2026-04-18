@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History | AutoParts Global</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,6 +31,10 @@
         (function () {
             if (!window.APGAuth || !APGAuth.isLoggedIn()) {
                 window.location.replace('login.html?next=orders.html');
+                return;
+            }
+            if (APGAuth.getSession().role === 'admin') {
+                window.location.replace('admin.html');
             }
         })();
     </script>

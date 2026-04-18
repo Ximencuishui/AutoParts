@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | AutoParts Global</title>
     <!-- Tailwind CSS -->
@@ -72,6 +73,14 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    <script src="js/auth.js"></script>
+    <script>
+        (function () {
+            if (!window.APGAuth || !APGAuth.isLoggedIn() || APGAuth.getSession().role !== 'admin') {
+                window.location.replace('admin-login.html');
+            }
+        })();
+    </script>
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <aside class="sidebar bg-gray-800 text-white w-64 flex flex-col">

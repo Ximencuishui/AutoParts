@@ -1,22 +1,66 @@
 /**
  * AutoParts Global — prototype auth (localStorage only, no backend).
- * Demo account: demo@autoparts.global / demo123
+ *
+ * Demo accounts (passwords are for local testing only):
+ *   buyer — buyer@autoparts.global / buyer123   → customer area (account, orders, …)
+ *   admin — admin@autoparts.global / admin123     → admin dashboard
+ * Legacy: demo@autoparts.global / demo123       → same as buyer
  */
 (function (global) {
     var SESSION_KEY = 'apg_session';
     var REGISTRY_KEY = 'apg_registered_users';
 
-    var DEMO = {
-        email: 'demo@autoparts.global',
-        password: 'demo123',
-        firstName: 'Demo',
-        lastName: 'User'
-    };
+    var BUILTIN = [
+        {
+            email: 'buyer@autoparts.global',
+            password: 'buyer123',
+            firstName: 'Demo',
+            lastName: 'Buyer',
+            role: 'buyer'
+        },
+        {
+            email: 'admin@autoparts.global',
+            password: 'admin123',
+            firstName: 'Admin',
+            lastName: 'User',
+            role: 'admin'
+        },
+        {
+            email: 'demo@autoparts.global',
+            password: 'demo123',
+            firstName: 'Demo',
+            lastName: 'User',
+            role: 'buyer'
+        }
+    ];
+
+    /** Shown on customer login page (buyer quick-fill). */
+    var DEMO = BUILTIN[0];
+
+    function reservedEmailsLower() {
+        var set = {};
+        for (var i = 0; i < BUILTIN.length; i++) {
+            set[BUILTIN[i].email.toLowerCase()] = true;
+        }
+        return set;
+    }
+
+    function findBuiltin(email, password) {
+        var e = String(email).trim().toLowerCase();
+        var p = String(password);
+        for (var i = 0; i < BUILTIN.length; i++) {
+            var u = BUILTIN[i];
+            if (u.email.toLowerCase() === e && u.password === p) {
+                return u;
+            }
+        }
+        return null;
+    }
 
     function getRegistry() {
         try {
             return JSON.parse(localStorage.getItem(REGISTRY_KEY) || '[]');
-        } catch (e) {
+        } catch (err) {
             return [];
         }
     }
@@ -30,6 +74,7 @@
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
+            role: user.role || 'buyer',
             loginAt: new Date().toISOString()
         };
         localStorage.setItem(SESSION_KEY, JSON.stringify(session));
@@ -37,8 +82,11 @@
 
     function getSession() {
         try {
-            return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
-        } catch (e) {
+            var s = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+            if (!s) return null;
+            if (!s.role) s.role = 'buyer';
+            return s;
+        } catch (err) {
             return null;
         }
     }
@@ -52,21 +100,32 @@
     }
 
     function login(email, password) {
+        var builtin = findBuiltin(email, password);
+        if (builtin) {
+            setSession(builtin);
+            return { ok: true, role: builtin.role };
+        }
         var e = String(email).trim().toLowerCase();
         var p = String(password);
-        if (e === DEMO.email.toLowerCase() && p === DEMO.password) {
-            setSession(DEMO);
-            return { ok: true };
-        }
         var users = getRegistry();
         for (var i = 0; i < users.length; i++) {
             var u = users[i];
             if (u.email.toLowerCase() === e && u.password === p) {
-                setSession({ email: u.email, firstName: u.firstName, lastName: u.lastName });
-                return { ok: true };
+                setSession({ email: u.email, firstName: u.firstName, lastName: u.lastName, role: 'buyer' });
+                return { ok: true, role: 'buyer' };
             }
         }
         return { ok: false, message: 'Invalid email or password.' };
+    }
+
+    /** Admin portal: only the admin demo account (or a registered user with role admin — none yet). */
+    function loginAdmin(email, password) {
+        var builtin = findBuiltin(email, password);
+        if (builtin && builtin.role === 'admin') {
+            setSession(builtin);
+            return { ok: true, role: 'admin' };
+        }
+        return { ok: false, message: 'Invalid admin email or password.' };
     }
 
     function register(data) {
@@ -80,10 +139,11 @@
         if (password.length < 6) {
             return { ok: false, message: 'Password must be at least 6 characters.' };
         }
-        var users = getRegistry();
-        if (email === DEMO.email.toLowerCase()) {
-            return { ok: false, message: 'This email is reserved for the demo account. Sign in instead.' };
+        var reserved = reservedEmailsLower();
+        if (reserved[email]) {
+            return { ok: false, message: 'This email is reserved. Sign in with the demo account instead.' };
         }
+        var users = getRegistry();
         for (var i = 0; i < users.length; i++) {
             if (users[i].email.toLowerCase() === email) {
                 return { ok: false, message: 'An account with this email already exists.' };
@@ -91,16 +151,24 @@
         }
         users.push({ firstName: firstName, lastName: lastName, email: email, password: password });
         saveRegistry(users);
-        setSession({ email: email, firstName: firstName, lastName: lastName });
+        setSession({ email: email, firstName: firstName, lastName: lastName, role: 'buyer' });
         return { ok: true };
     }
 
+    function isAdmin() {
+        var s = getSession();
+        return s && s.role === 'admin';
+    }
+
     global.APGAuth = {
+        BUILTIN: BUILTIN,
         DEMO: DEMO,
         isLoggedIn: isLoggedIn,
         getSession: getSession,
         login: login,
+        loginAdmin: loginAdmin,
         register: register,
-        logout: logout
+        logout: logout,
+        isAdmin: isAdmin
     };
 })(typeof window !== 'undefined' ? window : {});
